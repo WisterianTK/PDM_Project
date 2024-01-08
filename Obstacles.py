@@ -10,9 +10,14 @@ class RandomObstacles:
         # goal_position: Position of goal in work space
         # range_num_vertices: Range of number of vertices from which the number of vertices is sampled for each obstacle
         # bounding_box: Bounding box in which you want to generate random obstacles
+        # convexHulls: List that stores all convex hulls
+        # basePositions: List that stores base positions of convex hulls
         self.obstacleIDs = list()
-        self.visualShapeIDs = list()
         self.collisionShapeIDs = list()
+        self.convexHulls= list()
+        self.basePositons = list()
+        self.num_obstacles = num_obstacles
+
 
         # Initialize random obstacles
         for i in range(num_obstacles):
@@ -21,11 +26,16 @@ class RandomObstacles:
 
             # Create points of convex hull
             points = create_convex_hull(num_vertices)
+
             # Create convex hull (the same points are concatenated to improve a rending issue)
             hull = sp.spatial.ConvexHull(np.concatenate((points, points, points), axis=0), qhull_options='QJ')
             vertices = hull.points
-            indices = hull.simplices.flatten()
 
+            # Store the created convex hull
+            self.convexhulls.append(hull)
+
+
+            # indices = hull.simplices.flatten()
             # # Create visual shape and add to the list
             # visualShapeID = p.createVisualShape(shapeType=p.GEOM_MESH,
             #                                      rgbaColor=[1, 0, 0, 1],
@@ -56,6 +66,8 @@ class RandomObstacles:
                                 np.random.randint(bounding_box[0][2], bounding_box[1][2])]
                 condition = np.any(np.array([-1.5, -1.5, -1.5])+goal_position <= basePosition) and np.any(basePosition <= np.array([1.5, 1.5, 1.5])+goal_position)
 
+            # Save the base position
+            self.basePositons.append(basePosition)
             obstacleID = p.createMultiBody(baseCollisionShapeIndex=collisionShapeID,
                                            basePosition=basePosition)
             self.obstacleIDs.append(obstacleID)
