@@ -15,7 +15,7 @@ class RandomObstacles:
         self.obstacleIDs = list()
         self.collisionShapeIDs = list()
         self.convexHulls= list()
-        self.basePositons = list()
+        self.basePositions = list()
         self.num_obstacles = num_obstacles
 
 
@@ -32,7 +32,7 @@ class RandomObstacles:
             vertices = hull.points
 
             # Store the created convex hull
-            self.convexhulls.append(hull)
+            self.convexHulls.append(hull)
 
 
             # indices = hull.simplices.flatten()
@@ -55,19 +55,19 @@ class RandomObstacles:
             # (1.5 of margin around goal position)
 
             # Sample point within the bounding box
-            basePosition = [np.random.randint(bounding_box[0][0], bounding_box[1][0]),
+            basePosition = np.array([np.random.randint(bounding_box[0][0], bounding_box[1][0]),
                             np.random.randint(bounding_box[0][1], bounding_box[1][1]),
-                            np.random.randint(bounding_box[0][2], bounding_box[1][2])]
+                            np.random.randint(bounding_box[0][2], bounding_box[1][2])])
 
             condition = np.any(np.array([-1.5, -1.5, -1.5])+goal_position <= basePosition) and np.any(basePosition <= np.array([1.5, 1.5, 1.5])+goal_position)
             while condition:
-                basePosition = [np.random.randint(bounding_box[0][0], bounding_box[1][0]),
-                                np.random.randint(bounding_box[0][1], bounding_box[1][1]),
-                                np.random.randint(bounding_box[0][2], bounding_box[1][2])]
+                basePosition = np.array([np.random.randint(bounding_box[0][0], bounding_box[1][0]),
+                                         np.random.randint(bounding_box[0][1], bounding_box[1][1]),
+                                         np.random.randint(bounding_box[0][2], bounding_box[1][2])])
                 condition = np.any(np.array([-1.5, -1.5, -1.5])+goal_position <= basePosition) and np.any(basePosition <= np.array([1.5, 1.5, 1.5])+goal_position)
 
             # Save the base position
-            self.basePositons.append(basePosition)
+            self.basePositions.append(basePosition)
             obstacleID = p.createMultiBody(baseCollisionShapeIndex=collisionShapeID,
                                            basePosition=basePosition)
             self.obstacleIDs.append(obstacleID)

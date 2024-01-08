@@ -12,7 +12,7 @@ class RRT:
         # self.nodes: list of nodes in R^3  [nodes] x [x, y, z]
         # self.paths: list of paths (start and end points between two nodes)  [paths] x [x, y, z, x, y, z]
 
-        self.nodes = list(init_node)
+        self.nodes = [init_node]
         self.goal = goal_node
         self.paths = []
         self.xrange = [config_box[0][0], config_box[1][0]]
@@ -62,7 +62,7 @@ class RRT:
 
     # Random Sampler
     def _sampleNode(self):
-        return np.array([np.random.uniform(self.xrange), np.random.uniform(self.yrange), np.random.uniform(self.zrange)])
+        return np.array([np.random.uniform(self.xrange[0],self.xrange[1]), np.random.uniform(self.yrange[0],self.yrange[1]), np.random.uniform(self.zrange[0],self.zrange[1])])
 
     # Collision Checker for node
     def _nodeCollisionCheck(self, new_node, obstacles):
@@ -70,7 +70,7 @@ class RRT:
         collision_flag = False
         for i in range(obstacles.num_obstacles):
             # A B C matrices of hyperplanes, shape:(number of simplex, 3)
-            ABC_matrices = obstacles.convexHulls[i].equations[:, 0:4]
+            ABC_matrices = obstacles.convexHulls[i].equations[:, 0:3]
 
             # D matrix of hyperplanes shape:(number of simplex, 1)
             D_matrices = obstacles.convexHulls[i].equations[:, -1, np.newaxis]
@@ -79,7 +79,7 @@ class RRT:
             basePosition = obstacles.basePositions[i]
 
             # Check if new_node is inside convexhull
-            if np.any(np.matmul(ABC_matrices, new_node[:, np.newaxis]-basePosition[:, np.newaxis])+D_matrices <= 0):
+            if np.all(np.matmul(ABC_matrices, new_node[:, np.newaxis]-basePosition[:, np.newaxis])+D_matrices <= 0):
                 return True
         return False
 
@@ -97,7 +97,7 @@ class RRT:
         # Find a node that has the shortest Euclidean distance
         # NOTE: Nicer to make "node" an object
         shortest_idx = None
-        shortest_dist = 0
+        shortest_dist = 100
         for idx, node in enumerate(self.nodes):
             # Compute Euclidean distance for each node
             dist = np.linalg.norm(node - new_node)
