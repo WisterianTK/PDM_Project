@@ -5,7 +5,7 @@ import numpy as np
 
 
 class RandomObstacles:
-    def __init__(self, num_obstacles, initial_position, goal_position, range_num_vertices=[7, 8], bounding_box=[[-10, -10, 0],[10, 10, 3]], meshScale=0.1):
+    def __init__(self, num_obstacles, initial_position, goal_position, range_num_vertices=[7, 8], bounding_box=[[-10, -10, 0],[10, 10, 4]], meshScale=0.1):
         # num_obstacles: Number of obstacles
         # goal_position: Position of goal in work space
         # range_num_vertices: Range of number of vertices from which the number of vertices is sampled for each obstacle

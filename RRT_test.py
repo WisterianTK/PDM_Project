@@ -4,6 +4,7 @@ import time
 import pybullet_data
 from RRT import RRT
 from Obstacles import RandomObstacles
+import random
 
 # Initialize pybullet
 physicsClient = p.connect(p.GUI)
@@ -13,14 +14,14 @@ p.setGravity(0, 0, -10)
 planeId = p.loadURDF("plane.urdf")
 
 # Goal and initial nodes
-goal_node = np.array([6, 6, 2])
-init_node = np.array([0, 0, 2])
-
+goal_node = np.array([6, 6, 3])
+init_node = np.array([0, 0, 1])
+np.random.seed(1)
 # Add text GOAl in simulation
 textID = p.addUserDebugText(text="GOAL", textPosition=goal_node, textColorRGB=[0, 0, 0], textSize=1)
 
 # Generate obstacles
-obstacles = RandomObstacles(num_obstacles=500, goal_position=goal_node, initial_position=init_node)
+obstacles = RandomObstacles(num_obstacles=400, goal_position=goal_node, initial_position=init_node)
 # Initialize RRT
 rrt = RRT(init_node=init_node, goal_node=goal_node)
 
