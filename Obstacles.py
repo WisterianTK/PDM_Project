@@ -5,7 +5,7 @@ import numpy as np
 
 
 class RandomObstacles:
-    def __init__(self, num_obstacles, goal_position, range_num_vertices=[7, 8], bounding_box=[[-10, -10, 0],[10, 10, 3]], meshScale=[0.1, 0.1, 0.1]):
+    def __init__(self, num_obstacles, goal_position, range_num_vertices=[7, 8], bounding_box=[[-10, -10, 0],[10, 10, 3]], meshScale=0.1):
         # num_obstacles: Number of obstacles
         # goal_position: Position of goal in work space
         # range_num_vertices: Range of number of vertices from which the number of vertices is sampled for each obstacle
@@ -17,6 +17,8 @@ class RandomObstacles:
         self.convexHulls= list()
         self.basePositions = list()
         self.num_obstacles = num_obstacles
+        self.meshScale = meshScale
+
 
 
         # Initialize random obstacles
@@ -28,7 +30,7 @@ class RandomObstacles:
             points = create_convex_hull(num_vertices)
 
             # Create convex hull (the same points are concatenated to improve a rending issue)
-            hull = sp.spatial.ConvexHull(np.concatenate((points, points, points), axis=0), qhull_options='QJ')
+            hull = sp.spatial.ConvexHull(np.concatenate((points, points, points), axis=0))
             vertices = hull.points
 
             # Store the created convex hull
@@ -40,7 +42,7 @@ class RandomObstacles:
             # visualShapeID = p.createVisualShape(shapeType=p.GEOM_MESH,
             #                                      rgbaColor=[1, 0, 0, 1],
             #                                      specularColor=[0.4, 0.4, 0],
-            #                                      meshScale=meshScale,
+            #                                      meshScale=self.meshScale*np.array([1., 1., 1.]),
             #                                      vertices=vertices,
             #                                      indices=indices)
             # self.visualShapeIDs.append(visualShapeID)
@@ -48,7 +50,7 @@ class RandomObstacles:
             # Create collision shape and add to the list
             collisionShapeID = p.createCollisionShape(shapeType=p.GEOM_MESH,
                                                        vertices=vertices,
-                                                       meshScale=meshScale)
+                                                       meshScale=self.meshScale*np.array([1., 1., 1.]))
             self.collisionShapeIDs.append(collisionShapeID)
 
             # Create obstacle and place it within the bounding box of the world and avoid placing too close to the goal
@@ -59,12 +61,14 @@ class RandomObstacles:
                             np.random.randint(bounding_box[0][1], bounding_box[1][1]),
                             np.random.randint(bounding_box[0][2], bounding_box[1][2])])
 
-            condition = np.any(np.array([-1.5, -1.5, -1.5])+goal_position <= basePosition) and np.any(basePosition <= np.array([1.5, 1.5, 1.5])+goal_position)
+            # Condition: the distance between base position of obstacle and goal should be larger than 1
+            condition = np.linalg.norm(basePosition-goal_position) <= 1
+
             while condition:
                 basePosition = np.array([np.random.randint(bounding_box[0][0], bounding_box[1][0]),
                                          np.random.randint(bounding_box[0][1], bounding_box[1][1]),
                                          np.random.randint(bounding_box[0][2], bounding_box[1][2])])
-                condition = np.any(np.array([-1.5, -1.5, -1.5])+goal_position <= basePosition) and np.any(basePosition <= np.array([1.5, 1.5, 1.5])+goal_position)
+                condition = np.linalg.norm(basePosition - goal_position) <= 1
 
             # Save the base position
             self.basePositions.append(basePosition)

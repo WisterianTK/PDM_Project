@@ -4,9 +4,10 @@ import pybullet as p
 
 # RRT class
 class RRT:
-    def __init__(self, init_node, goal_node, config_box=((-10, -10, 0), (10, 10, 3)), max_iter=300, margin=0.5):
+    def __init__(self, init_node, goal_node, step_size=0.2, config_box=((-10, -10, 0), (10, 10, 3)), max_iter=100, margin=0.5):
         # init_node: Initial node np.array(x, y, z)
         # goal_node: Goal node np.array(x, y, z)
+        # step_size: Step size for the expansion of node
         # config_box: Bounding box of the configuration space ((x, y, z), (x, y, z)) (since uniformly sampling in infinitely large space isn't efficient)
         # max_iter: Maximum number of expansions
         # self.nodes: list of nodes in R^3  [nodes] x [x, y, z]
@@ -21,24 +22,23 @@ class RRT:
         self.max_iter = max_iter
         self.goal_flag = False
         self.margin = margin
+        self.step_size = step_size
 
     def runAlgorithm(self, obstacles):
         # obstacles: class instance from Obstacles.py
 
         for i in range(self.max_iter):
-            # Randomly sample configuration
-            new_node = self._sampleNode()
+            # Randomly sample configuration & get neighbor node
+            new_node, neighbor_node = self._sampleNode()
 
             # Check if the sample configuration is collision-free
             if self._nodeCollisionCheck(new_node, obstacles):
                 continue
 
-            # Find the closest neighbor
-            neighbor_node = self._findNeighbor(new_node)
 
             # Find path (straight line in this simple case)
             # new_path: [ [start position] [end position] ]
-            new_path = self._findPath(new_node, neighbor_node)
+            new_path = self._findPath(neighbor_node, new_node)
 
             # Check if the path is collision-free
             if self._pathCollisionCheck(new_path):
@@ -49,20 +49,25 @@ class RRT:
             self.nodes.append(new_node)
             self.paths.append(new_path)
 
-            # Check if we found a node in the vicinity of goal node
-            for node in self.nodes:
-                if np.linalg.norm(self.goal-node) <= self.margin:
-                    self.goal_flag = True
-
-                    # Backtrack the path to the goal
-
-                    return self.goal_flag
-
+            # Check if new node is in the vicinity of goal node
+            if np.linalg.norm(self.goal-new_node) <= self.margin:
+                self.goal_flag = True
+                # Backtrack the path to the goal
+                # TODO
+                return self.goal_flag
         return self.goal_flag
+
 
     # Random Sampler
     def _sampleNode(self):
-        return np.array([np.random.uniform(self.xrange[0],self.xrange[1]), np.random.uniform(self.yrange[0],self.yrange[1]), np.random.uniform(self.zrange[0],self.zrange[1])])
+        # First sample a point in configuration space
+        point = np.array([np.random.uniform(self.xrange[0],self.xrange[1]), np.random.uniform(self.yrange[0],self.yrange[1]), np.random.uniform(self.zrange[0],self.zrange[1])])
+        # Find the closest node to the sampled point
+        neighbor_node = self._findNeighbor(point)
+        # Find unit vector from the closest node to the sampled point
+        unitVector = (point-neighbor_node)/np.linalg.norm(neighbor_node-point)
+        # Return a point that is translated in the direction of the unit vector by the step size & neighbor node
+        return neighbor_node+self.step_size*unitVector, neighbor_node
 
     # Collision Checker for node
     def _nodeCollisionCheck(self, new_node, obstacles):
@@ -79,15 +84,16 @@ class RRT:
             basePosition = obstacles.basePositions[i]
 
             # Check if new_node is inside convexhull
-            if np.all(np.matmul(ABC_matrices, new_node[:, np.newaxis]-basePosition[:, np.newaxis])+D_matrices <= 0):
+            condition = np.matmul(ABC_matrices, (new_node[:, np.newaxis]-basePosition[:, np.newaxis])/obstacles.meshScale)+D_matrices <= 0
+            if np.all(condition):
                 return True
         return False
 
 
     # Collision Checker for path
     def _pathCollisionCheck(self, new_path):
-        pathCollisionInfo = p.rayTest(new_path)
-        if pathCollisionInfo[0] == -1:
+        pathCollisionInfo = p.rayTest(new_path[0], new_path[1])
+        if pathCollisionInfo[0][0] == -1:
             return False
         else:
             return True
@@ -104,12 +110,12 @@ class RRT:
             # Update index for the closest node
             if shortest_dist > dist:
                 shortest_idx = idx
+                shortest_dist = dist
         return self.nodes[shortest_idx]
 
-
     # Steering function (simple straight line so we don't actually need this func)
-    def _findPath(self, new_node, neighbor_node):
-        return [new_node, neighbor_node]
+    def _findPath(self, neighbor_node, new_node):
+        return [neighbor_node, new_node]
 
 
 

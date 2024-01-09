@@ -12,18 +12,21 @@ planeId = p.loadURDF("plane.urdf")
 
 meshScale = [.5, .5, .5]
 
-goal_node = np.array([5, 5, 5])
+goal_node = np.array([3, 3, 2])
 init_node = np.array([0, 0, 2])
-obstacles = RandomObstacles(5, goal_position=goal_node)
+textID = p.addUserDebugText(text="GOAL", textPosition=goal_node, textColorRGB=[0, 0, 0], textSize=1)
+
+obstacles = RandomObstacles(num_obstacles=100, goal_position=goal_node)
 rrt = RRT(init_node=init_node, goal_node=goal_node)
 
-print(rrt.runAlgorithm(obstacles))
+goal_reached = rrt.runAlgorithm(obstacles)
+print(goal_reached)
 
 for path in rrt.paths:
-    p.addUserDebugLine(path[0][:],path[1][:])
-    print(path)
-    
-for i in range(1000):
+    p.addUserDebugLine(lineFromXYZ=path[0], lineToXYZ=path[1], lineColorRGB=[1, 0, 0])
+    # print(path)
+
+for i in range(5000):
     p.stepSimulation()
     time.sleep(1./240.)
 
