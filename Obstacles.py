@@ -5,7 +5,7 @@ import numpy as np
 
 
 class RandomObstacles:
-    def __init__(self, num_obstacles, goal_position, range_num_vertices=[7, 8], bounding_box=[[-10, -10, 0],[10, 10, 3]], meshScale=0.1):
+    def __init__(self, num_obstacles, initial_position, goal_position, range_num_vertices=[7, 8], bounding_box=[[-10, -10, 0],[10, 10, 3]], meshScale=0.1):
         # num_obstacles: Number of obstacles
         # goal_position: Position of goal in work space
         # range_num_vertices: Range of number of vertices from which the number of vertices is sampled for each obstacle
@@ -61,14 +61,15 @@ class RandomObstacles:
                             np.random.randint(bounding_box[0][1], bounding_box[1][1]),
                             np.random.randint(bounding_box[0][2], bounding_box[1][2])])
 
-            # Condition: the distance between base position of obstacle and goal should be larger than 1
-            condition = np.linalg.norm(basePosition-goal_position) <= 1
+            # Condition: the distance between base position of obstacle and goal should be larger than 1 AND
+            # the distance between base position of obstacle and start node should be larger than 2
+            condition = np.linalg.norm(basePosition-goal_position) <= 1 and np.linalg.norm(basePosition - initial_position) <= 2
 
             while condition:
                 basePosition = np.array([np.random.randint(bounding_box[0][0], bounding_box[1][0]),
                                          np.random.randint(bounding_box[0][1], bounding_box[1][1]),
                                          np.random.randint(bounding_box[0][2], bounding_box[1][2])])
-                condition = np.linalg.norm(basePosition - goal_position) <= 1
+                condition = np.linalg.norm(basePosition - goal_position) <= 1 and np.linalg.norm(basePosition - initial_position) <= 2
 
             # Save the base position
             self.basePositions.append(basePosition)
