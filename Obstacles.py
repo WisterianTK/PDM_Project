@@ -5,7 +5,7 @@ import numpy as np
 
 
 class RandomObstacles:
-    def __init__(self, num_obstacles, goal_position, range_num_vertices=[7, 8], bounding_box=[[-10, -10, 0],[10, 10, 3]], meshScale=[0.1, 0.1, 0.1]):
+    def __init__(self, num_obstacles, goal_position, range_num_vertices=[7, 8], bounding_box=[[0, 0, 0],[10, 10, 10]], meshScale=[0.1, 0.1, 0.1]):
         # num_obstacles: Number of obstacles
         # goal_position: Position of goal in work space
         # range_num_vertices: Range of number of vertices from which the number of vertices is sampled for each obstacle
@@ -13,6 +13,11 @@ class RandomObstacles:
         self.obstacleIDs = list()
         self.visualShapeIDs = list()
         self.collisionShapeIDs = list()
+
+        self.num_obstacles = num_obstacles
+
+        self.convexHulls = []
+        self.basePositions = []
 
         # Initialize random obstacles
         for i in range(num_obstacles):
@@ -23,6 +28,7 @@ class RandomObstacles:
             points = create_convex_hull(num_vertices)
             # Create convex hull (the same points are concatenated to improve a rending issue)
             hull = sp.spatial.ConvexHull(np.concatenate((points, points, points), axis=0), qhull_options='QJ')
+            self.convexHulls.append(hull)
             vertices = hull.points
             indices = hull.simplices.flatten()
 
@@ -45,20 +51,21 @@ class RandomObstacles:
             # (1.5 of margin around goal position)
 
             # Sample point within the bounding box
-            basePosition = [np.random.randint(bounding_box[0][0], bounding_box[1][0]),
+            basePosition = np.array([np.random.randint(bounding_box[0][0], bounding_box[1][0]),
                             np.random.randint(bounding_box[0][1], bounding_box[1][1]),
-                            np.random.randint(bounding_box[0][2], bounding_box[1][2])]
+                            np.random.randint(bounding_box[0][2], bounding_box[1][2])])
 
             condition = np.any(np.array([-1.5, -1.5, -1.5])+goal_position <= basePosition) and np.any(basePosition <= np.array([1.5, 1.5, 1.5])+goal_position)
             while condition:
-                basePosition = [np.random.randint(bounding_box[0][0], bounding_box[1][0]),
+                basePosition = np.array([np.random.randint(bounding_box[0][0], bounding_box[1][0]),
                                 np.random.randint(bounding_box[0][1], bounding_box[1][1]),
-                                np.random.randint(bounding_box[0][2], bounding_box[1][2])]
+                                np.random.randint(bounding_box[0][2], bounding_box[1][2])])
                 condition = np.any(np.array([-1.5, -1.5, -1.5])+goal_position <= basePosition) and np.any(basePosition <= np.array([1.5, 1.5, 1.5])+goal_position)
 
             obstacleID = p.createMultiBody(baseCollisionShapeIndex=collisionShapeID,
                                            basePosition=basePosition)
             self.obstacleIDs.append(obstacleID)
+            self.basePositions.append(basePosition)
 
 
 # Function to create random convex shape
