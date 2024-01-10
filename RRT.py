@@ -93,12 +93,11 @@ class RRT:
             basePosition = obstacles.basePositions[i]
 
             # Check if new_node is inside convexhull
-            eq = np.matmul(ABC_matrices, (new_node[:, np.newaxis]-basePosition[:, np.newaxis])/obstacles.meshScale)+D_matrices
-            #co = np.matmul(ABC_matrices, np.array([3*[self.drone_radius/obstacles.meshScale]]).T)
-            condition = eq <= self.drone_radius
+            eq = np.matmul(ABC_matrices, (new_node[:, np.newaxis]-basePosition[:, np.newaxis])/obstacles.meshScale)+D_matrices 
+            condition = eq <= self.drone_radius/obstacles.meshScale
             if np.all(condition):
                 return True
-        print("eq:", eq)
+        #print("eq:", eq)
         return False
 
 
