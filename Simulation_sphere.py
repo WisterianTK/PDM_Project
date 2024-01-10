@@ -1,158 +1,42 @@
+import numpy as np
 import pybullet as p
 import time
 import pybullet_data
+import scipy as sp
 
 physicsClient = p.connect(p.GUI)
 p.setAdditionalSearchPath(pybullet_data.getDataPath())
 p.setGravity(0, 0, -10)
 planeId = p.loadURDF("plane.urdf")
 
-startPos = [0, 0, 2]
+startPos = [0, 0, 3]
 startOrientation = p.getQuaternionFromEuler([0, 0, 0])
 sphereID = p.loadURDF("sphere_small.urdf", startPos, startOrientation)
 
 step = 0
 print(startPos)
 
-meshScale = [0.1, 0.1, 0.1]
+meshScale = [1, 1, 1]
 
-vertices = [[-1.000000, -1.000000, 1.000000], [1.000000, -1.000000, 1.000000],
-            [1.000000, 1.000000, 1.000000], [-1.000000, 1.000000, 1.000000],
-            [-1.000000, -1.000000, -1.000000], [1.000000, -1.000000, -1.000000],
-            [1.000000, 1.000000, -1.000000], [-1.000000, 1.000000, -1.000000],
-            [-1.000000, -1.000000, -1.000000], [-1.000000, 1.000000, -1.000000],
-            [-1.000000, 1.000000, 1.000000], [-1.000000, -1.000000, 1.000000],
-            [1.000000, -1.000000, -1.000000], [1.000000, 1.000000, -1.000000],
-            [1.000000, 1.000000, 1.000000], [1.000000, -1.000000, 1.000000],
-            [-1.000000, -1.000000, -1.000000], [-1.000000, -1.000000, 1.000000],
-            [1.000000, -1.000000, 1.000000], [1.000000, -1.000000, -1.000000],
-            [-1.000000, 1.000000, -1.000000], [-1.000000, 1.000000, 1.000000],
-            [1.000000, 1.000000, 1.000000], [1.000000, 1.000000, -1.000000]]
+vertices = [np.array([-1.000000, -1.000000, 1.000000]), np.array([1.000000, -1.000000, 1.000000]),
+            np.array([1.000000, 1.000000, 1.000000]), np.array([-1.000000, 1.000000, 1.000000]),
+            np.array([-1.000000, -1.000000, -1.000000]), np.array([1.000000, -1.000000, -1.000000]),
+            np.array([1.000000, 1.000000, -1.000000]), np.array([-1.000000, 1.000000, -1.000000])]
+hull = sp.spatial.ConvexHull(points=vertices)
 
-normals = [[0.000000, 0.000000, 1.000000], [0.000000, 0.000000, 1.000000],
-           [0.000000, 0.000000, 1.000000], [0.000000, 0.000000, 1.000000],
-           [0.000000, 0.000000, -1.000000], [0.000000, 0.000000, -1.000000],
-           [0.000000, 0.000000, -1.000000], [0.000000, 0.000000, -1.000000],
-           [-1.000000, 0.000000, 0.000000], [-1.000000, 0.000000, 0.000000],
-           [-1.000000, 0.000000, 0.000000], [-1.000000, 0.000000, 0.000000],
-           [1.000000, 0.000000, 0.000000], [1.000000, 0.000000, 0.000000],
-           [1.000000, 0.000000, 0.000000], [1.000000, 0.000000, 0.000000],
-           [0.000000, -1.000000, 0.000000], [0.000000, -1.000000, 0.000000],
-           [0.000000, -1.000000, 0.000000], [0.000000, -1.000000, 0.000000],
-           [0.000000, 1.000000, 0.000000], [0.000000, 1.000000, 0.000000],
-           [0.000000, 1.000000, 0.000000], [0.000000, 1.000000, 0.000000]]
-
-indices = [
-    0,
-    1,
-    2,
-    0,
-    2,
-    3,  #//ground face
-    6,
-    5,
-    4,
-    7,
-    6,
-    4,  #//top face
-    10,
-    9,
-    8,
-    11,
-    10,
-    8,
-    12,
-    13,
-    14,
-    12,
-    14,
-    15,
-    18,
-    17,
-    16,
-    19,
-    18,
-    16,
-    20,
-    21,
-    22,
-    20,
-    22,
-    23
-]
-
-indices = [
-    # top face
-    0,
-    1,
-    2,
-    0,
-    2,
-    3,
-    #//ground face
-    6,
-    5,
-    4,
-    7,
-    6,
-    4,
-    #//right face
-    3,
-    7,
-    4,
-    0,
-    3,
-    4,
-    # front face
-    5,
-    6,
-    2,
-    5,
-    2,
-    1,
-    # left side
-    1,
-    0,
-    4,
-    5,
-    1,
-    4,
-    # back side
-    5,
-    3,
-    6,
-    7,
-    6,
-    2
-]
-
-# objectshape = p.createVisualShape(shapeType=p.GEOM_MESH,
-#                                rgbaColor=[1, 0, 0, 1],
-#                                specularColor=[0.4, .4, 0],
-#                                visualFramePosition=shift,
-#                                meshScale=meshScale,
-#                                vertices=vertices,
-#                                indices=indices,
-#                                uvs=uvs,
-#                                normals=normals)
-objectshape = p.createVisualShape(shapeType=p.GEOM_MESH,
-                               rgbaColor=[1, 0, 0, 1],
-                               specularColor=[0.4, .4, 0],
-                               meshScale=meshScale,
-                               vertices=vertices,
-                               indices=indices)
 
 objectCollision = p.createCollisionShape(shapeType=p.GEOM_MESH,
-                                         vertices=vertices,
+                                         vertices=hull.points,
                                          meshScale=meshScale)
 
-objectID = p.createMultiBody(baseVisualShapeIndex=objectshape, baseCollisionShapeIndex=objectCollision, basePosition=[0, 0, 1])
-
+objectID = p.createMultiBody(baseCollisionShapeIndex=objectCollision, basePosition=[0, 0, 1])
+print(list(np.array([1, 1, 1])))
+print(np.matmul(hull.equations[:,0:3], np.array([[0], [0], [-1]])+np.array([[0], [0], [-3]]))+ hull.equations[:,-1,np.newaxis])
 for i in range(1000):
-    pos = [step, startPos[1], startPos[2]]
+    # pos = [startPos[0], startPos[1], startPos[2]-step]
     p.stepSimulation()
     # p.resetBasePositionAndOrientation(sphereID, pos,
-    #                                   startOrientation)
+    #                                    startOrientation)
     time.sleep(1./240.)
     step += 0.01
     # spherePos, sphereOrn = p.getBasePositionAndOrientation(sphereID)
@@ -160,6 +44,7 @@ for i in range(1000):
     # print(spherePos, sphereOrn)
     # print(p.rayTest([100, 100, 100], [100, 100, 200]))
     p.performCollisionDetection(physicsClient)
+    print(p.getContactPoints(objectID))
 
 # print(p.getDynamicsInfo(sphereID, -1))
 # print(p.getCollisionShapeData(sphereID,-1))

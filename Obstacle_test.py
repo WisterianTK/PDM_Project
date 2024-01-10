@@ -52,9 +52,14 @@ sphereID = p.loadURDF("sphere_small.urdf", startPos, startOrientation)
 # objectID = p.createMultiBody(baseCollisionShapeIndex=objectCollision, basePosition=[0, 0, 1])
 
 #### TO CHECK OBSTACLE CLASS
-goal = np.array([5, 5, 5])
-num_obstacles = 100
-obstacles = RandomObstacles(num_obstacles=num_obstacles, goal_position=goal)
+goal_node = np.array([6, 6, 3])
+init_node = np.array([0, 0, 1])
+np.random.seed(1)
+# Add text GOAl in simulation
+textID = p.addUserDebugText(text="GOAL", textPosition=goal_node, textColorRGB=[0, 0, 0], textSize=1)
+
+# Generate obstacles
+obstacles = RandomObstacles(num_obstacles=400, goal_position=goal_node, initial_position=init_node)
 
 for i in range(1000):
     #pos = [step, startPos[1], startPos[2]]

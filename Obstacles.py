@@ -5,14 +5,21 @@ import numpy as np
 
 
 class RandomObstacles:
-    def __init__(self, num_obstacles, goal_position, range_num_vertices=[7, 8], bounding_box=[[-10, -10, 0],[10, 10, 3]], meshScale=[0.1, 0.1, 0.1]):
+    def __init__(self, num_obstacles, initial_position, goal_position, range_num_vertices=[7, 8], bounding_box=[[-10, -10, 0],[10, 10, 4]], meshScale=0.1):
         # num_obstacles: Number of obstacles
         # goal_position: Position of goal in work space
         # range_num_vertices: Range of number of vertices from which the number of vertices is sampled for each obstacle
         # bounding_box: Bounding box in which you want to generate random obstacles
+        # convexHulls: List that stores all convex hulls
+        # basePositions: List that stores base positions of convex hulls
         self.obstacleIDs = list()
-        self.visualShapeIDs = list()
         self.collisionShapeIDs = list()
+        self.convexHulls= list()
+        self.basePositions = list()
+        self.num_obstacles = num_obstacles
+        self.meshScale = meshScale
+
+
 
         # Initialize random obstacles
         for i in range(num_obstacles):
@@ -21,16 +28,21 @@ class RandomObstacles:
 
             # Create points of convex hull
             points = create_convex_hull(num_vertices)
-            # Create convex hull (the same points are concatenated to improve a rending issue)
-            hull = sp.spatial.ConvexHull(np.concatenate((points, points, points), axis=0), qhull_options='QJ')
-            vertices = hull.points
-            indices = hull.simplices.flatten()
 
+            # Create convex hull (the same points are concatenated to improve a rending issue)
+            hull = sp.spatial.ConvexHull(np.concatenate((points, points, points), axis=0))
+            vertices = hull.points
+
+            # Store the created convex hull
+            self.convexHulls.append(hull)
+
+
+            # indices = hull.simplices.flatten()
             # # Create visual shape and add to the list
             # visualShapeID = p.createVisualShape(shapeType=p.GEOM_MESH,
             #                                      rgbaColor=[1, 0, 0, 1],
             #                                      specularColor=[0.4, 0.4, 0],
-            #                                      meshScale=meshScale,
+            #                                      meshScale=self.meshScale*np.array([1., 1., 1.]),
             #                                      vertices=vertices,
             #                                      indices=indices)
             # self.visualShapeIDs.append(visualShapeID)
@@ -38,24 +50,31 @@ class RandomObstacles:
             # Create collision shape and add to the list
             collisionShapeID = p.createCollisionShape(shapeType=p.GEOM_MESH,
                                                        vertices=vertices,
-                                                       meshScale=meshScale)
+                                                       meshScale=self.meshScale*np.array([1., 1., 1.]))
             self.collisionShapeIDs.append(collisionShapeID)
 
             # Create obstacle and place it within the bounding box of the world and avoid placing too close to the goal
             # (1.5 of margin around goal position)
 
             # Sample point within the bounding box
-            basePosition = [np.random.randint(bounding_box[0][0], bounding_box[1][0]),
+            basePosition = np.array([np.random.randint(bounding_box[0][0], bounding_box[1][0]),
                             np.random.randint(bounding_box[0][1], bounding_box[1][1]),
-                            np.random.randint(bounding_box[0][2], bounding_box[1][2])]
+                            np.random.randint(bounding_box[0][2], bounding_box[1][2])])
 
-            condition = np.any(np.array([-1.5, -1.5, -1.5])+goal_position <= basePosition) and np.any(basePosition <= np.array([1.5, 1.5, 1.5])+goal_position)
-            while condition:
-                basePosition = [np.random.randint(bounding_box[0][0], bounding_box[1][0]),
-                                np.random.randint(bounding_box[0][1], bounding_box[1][1]),
-                                np.random.randint(bounding_box[0][2], bounding_box[1][2])]
-                condition = np.any(np.array([-1.5, -1.5, -1.5])+goal_position <= basePosition) and np.any(basePosition <= np.array([1.5, 1.5, 1.5])+goal_position)
+            # Condition: the distance between base position of obstacle and goal should be larger than 1 AND
+            # the distance between base position of obstacle and start node should be larger than 2
+            condition1 = np.linalg.norm(basePosition-goal_position) <= 1
+            condition2 = np.linalg.norm(basePosition - initial_position) <= 1.5
 
+            while condition1 or condition2:
+                basePosition = np.array([np.random.randint(bounding_box[0][0], bounding_box[1][0]),
+                                         np.random.randint(bounding_box[0][1], bounding_box[1][1]),
+                                         np.random.randint(bounding_box[0][2], bounding_box[1][2])])
+                condition1 = np.linalg.norm(basePosition - goal_position) <= 1
+                condition2 = np.linalg.norm(basePosition - initial_position) <= 1.5
+
+            # Save the base position
+            self.basePositions.append(basePosition)
             obstacleID = p.createMultiBody(baseCollisionShapeIndex=collisionShapeID,
                                            basePosition=basePosition)
             self.obstacleIDs.append(obstacleID)
