@@ -4,7 +4,7 @@ import pybullet as p
 
 # RRT class
 class RRT:
-    def __init__(self, init_node, goal_node, step_size=0.4, config_box=((-10, -10, 0), (10, 10, 3)), max_iter=300, margin=0.1):
+    def __init__(self, init_node, goal_node, step_size=0.4, config_box=((-10, -10, 0), (10, 10, 3)), max_iter=300, margin=0.1, drone_radius=0.5):
         # init_node: Initial node np.array(x, y, z)
         # goal_node: Goal node np.array(x, y, z)
         # step_size: Step size for the expansion of node
@@ -22,6 +22,7 @@ class RRT:
         self.max_iter = max_iter
         self.goal_flag = False
         self.margin = margin
+        self.drone_radius = drone_radius
         self.step_size = step_size
         self.path_to_goal = None
 
@@ -80,6 +81,7 @@ class RRT:
     def _nodeCollisionCheck(self, new_node, obstacles):
         # False for no collision
         collision_flag = False
+        eq = 0
         for i in range(obstacles.num_obstacles):
             # A B C matrices of hyperplanes, shape:(number of simplex, 3)
             ABC_matrices = obstacles.convexHulls[i].equations[:, 0:3]
@@ -91,9 +93,12 @@ class RRT:
             basePosition = obstacles.basePositions[i]
 
             # Check if new_node is inside convexhull
-            condition = np.matmul(ABC_matrices, (new_node[:, np.newaxis]-basePosition[:, np.newaxis])/obstacles.meshScale)+D_matrices <= 0
+            eq = np.matmul(ABC_matrices, (new_node[:, np.newaxis]-basePosition[:, np.newaxis])/obstacles.meshScale)+D_matrices
+            #co = np.matmul(ABC_matrices, np.array([3*[self.drone_radius/obstacles.meshScale]]).T)
+            condition = eq <= self.drone_radius
             if np.all(condition):
                 return True
+        print("eq:", eq)
         return False
 
 

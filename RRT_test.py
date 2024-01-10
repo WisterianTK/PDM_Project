@@ -22,8 +22,9 @@ textID = p.addUserDebugText(text="GOAL", textPosition=goal_node, textColorRGB=[0
 
 # Generate obstacles
 obstacles = RandomObstacles(num_obstacles=400, goal_position=goal_node, initial_position=init_node)
+
 # Initialize RRT
-rrt = RRT(init_node=init_node, goal_node=goal_node)
+rrt = RRT(init_node=init_node, goal_node=goal_node, drone_radius=5)
 
 # Set flags
 goal_reached = False
