@@ -7,15 +7,18 @@ from util import drawPoint, drawPolynomial
 # implementation inspired by:
 # https://github.com/yijiangh/pybullet_planning/blob/dev/src/pybullet_planning/motion_planners/rrt_star.py
 class Node(object):
-    def __init__(self, position : np.ndarray, velocities = None, accelerations = None , parent=None, d=0.0):
+    def __init__(self, position : np.ndarray, velocities = None, accelerations = None , parent=None, dt=0.0):
         self.position = position
         self.parent = parent
-        self.d = d
+        self.dt = dt
+        self.total_cost = 0.0
         self.children = set()
+
         
         if parent is not None:
             #self.cost = parent.cost + d
             self.parent.children.add(self)
+            self.total_cost = self.parent.total_cost + dt
 
         if velocities is not None:
             self.velocities = velocities
@@ -40,9 +43,11 @@ class Node(object):
         return 'Node : (' + str(self.position) + ')'
 
 
+
+
 # RRTu class
 class RRTu:
-    def __init__(self, init_position, goal_position, max_velocity = 5, max_acceleration = 100, config_box=((-4, -4, 0), (4, 4, 8)), max_iter=300, margin=0.5):
+    def __init__(self, init_position, goal_position, step_size_delta_time=0.4, goal_probability=0.1, max_velocity = 5, max_acceleration = 100, config_box=((-4, -4, 0), (4, 4, 8)), max_iter=300, margin=0.5):
         # init_node: Initial node np.array(x, y, z)
         # goal_node: Goal node np.array(x, y, z)
         # config_box: Bounding box of the configuration space ((x, y, z), (x, y, z)) (since uniformly sampling in infinitely large space isn't efficient)
@@ -52,6 +57,9 @@ class RRTu:
 
         self.max_velocity = max_velocity
         self.max_acceleration = max_acceleration
+        self.step_size_delta_time = step_size_delta_time
+
+        
 
         self.nodes = [Node(init_position)]
         self.goal = Node(goal_position)
@@ -62,6 +70,7 @@ class RRTu:
         self.max_iter = max_iter
         self.goal_flag = False
         self.margin = margin
+        self.goal_probability = goal_probability
 
         drawPoint(init_position, color=[0,1,0], size=0.2)
 
@@ -84,19 +93,16 @@ class RRTu:
                 #print("skip")
                 continue
             
-            
+            if dt > self.step_size_delta_time:
+                step_node_position, step_node_velocities = self.new_node_at_dt(neighbor_node.position, neighbor_node.velocities, new_node_accelerations)
+                step_node = Node(step_node_position, step_node_velocities, new_node_accelerations, parent=neighbor_node)
+            else:
+                step_node = Node(new_node.position, new_node_velocities, new_node_accelerations, parent=neighbor_node)
 
-            # Add velocities and accelerations TODO
-
-
-            # Add parent to node
-            new_node.add_parent(neighbor_node)
-            new_node.set_dynamics(new_node_velocities, new_node_accelerations, dt)
-
-            drawPoint(new_node.position, color=[0,0,1], size=0.05)
+            #drawPoint(step_node.position, color=[0,0,1], size=0.05)
             #drawPoint([-1,1,5], color=[1,0,0], size=0.2)
 
-            drawPolynomial(neighbor_node.position, neighbor_node.velocities, new_node_accelerations, dt)
+            drawPolynomial(neighbor_node.position, neighbor_node.velocities, new_node_accelerations, self.step_size_delta_time)
 
 
 
@@ -110,7 +116,7 @@ class RRTu:
             #     continue
 
             # Add the new node and path to the lists
-            self.nodes.append(new_node)
+            self.nodes.append(step_node)
             #self.paths.append(new_path)
             
             # Check if we found a node in the vicinity of goal node
@@ -127,15 +133,36 @@ class RRTu:
 
     # Random Sampler
     def _sampleNode(self):
+        if np.random.rand() < self.goal_probability:
+            return self.goal
         position = np.array([np.random.uniform(self.xrange[0],self.xrange[1]), np.random.uniform(self.yrange[0],self.yrange[1]), np.random.uniform(self.zrange[0],self.zrange[1])])
         return Node(position)
     
+    # Currently using num_segments, a step_size would be better (more consistent distances between samples)
+    # However for step_size we would need the arclenght which is expensive to compute
+    def sample_polynomial(start_position, start_velocity, acceleration, delta_t, num_segments=100):
+        # generator for sampling points along a given polynomial
+        assert len(start_position) == 3, "Input should be a numpy array of size 3"
+        assert len(start_velocity) == 3, "Input should be a numpy array of size 3"
+        assert len(acceleration) == 3, "Input should be a numpy array of size 3"
 
+        # Calculate the time
+        times = np.linspace(0, delta_t, num_segments+1)
+
+        # Calculate the position
+        for i, t in enumerate(times):
+            yield start_position + start_velocity * t + 0.5 * acceleration * t**2
+
+    def new_node_at_dt(self, start_position, start_velocity, acceleration):
+        position = start_position + start_velocity * self.step_size_delta_time + 0.5 * acceleration * self.step_size_delta_time**2
+        velocity = start_velocity + acceleration * self.step_size_delta_time
+        return position, velocity
 
     # Collision Checker for node
     def _nodeCollisionCheck(self, new_node, obstacles):
         # False for no collision
         collision_flag = False
+        eq = 0
         for i in range(obstacles.num_obstacles):
             # A B C matrices of hyperplanes, shape:(number of simplex, 3)
             ABC_matrices = obstacles.convexHulls[i].equations[:, 0:3]
@@ -147,18 +174,14 @@ class RRTu:
             basePosition = obstacles.basePositions[i]
 
             # Check if new_node is inside convexhull
-            if np.all(np.matmul(ABC_matrices, new_node.position[:, np.newaxis]-basePosition[:, np.newaxis])+D_matrices <= 0):
+            eq = np.matmul(ABC_matrices, (new_node[:, np.newaxis]-basePosition[:, np.newaxis])/obstacles.meshScale)+D_matrices 
+            condition = eq <= self.drone_radius/obstacles.meshScale
+            if np.all(condition):
                 return True
+        #print("eq:", eq)
         return False
 
 
-    # Collision Checker for path
-    def _pathCollisionCheck(self, new_path):
-        pathCollisionInfo = p.rayTest(new_path)
-        if pathCollisionInfo[0] == -1:
-            return False
-        else:
-            return True
 
     # Find the closest neighbor
     def _findNeighbor(self, new_node):

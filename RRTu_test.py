@@ -31,7 +31,7 @@ rrt = RRTu(init_position=init_position, goal_position=goal_position, max_iter=50
 # drawPolynomial(foundneighbor.position, foundneighbor.velocities, acc, dt)
 
 rrt.runAlgorithm(obstacles)
-
+print("Done")
 # print(rrt.runAlgorithm(obstacles))
 
 # for path in rrt.paths:
