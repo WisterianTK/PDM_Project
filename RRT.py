@@ -4,7 +4,7 @@ import pybullet as p
 
 # RRT class
 class RRT:
-    def __init__(self, init_node, goal_node, step_size=0.3, config_box=((-10, -10, 0), (10, 10, 3)), max_iter=10, margin=0.1):
+    def __init__(self, init_node, goal_node, step_size=0.5, config_box=((-10, -10, 0), (10, 10, 3)), max_iter=10, margin=0.1):
         # init_node: Initial node np.array(x, y, z)
         # goal_node: Goal node np.array(x, y, z)
         # step_size: Step size for the expansion of node

@@ -82,8 +82,8 @@ def run(
     rrt = RRT(init_node=np.array([0, 0, 1]), goal_node=GOAL_POSITION)
 
     #### Initialize trajectory related parameters
-    # Number of waypoints
-    NUM_WP = control_freq_hz
+    # Number of waypoints between two nodes
+    NUM_WP = 100
     # Target positions for one control period
     TARGET_POS = np.zeros((NUM_WP,3))
 
@@ -92,12 +92,12 @@ def run(
         TARGET_POS[i, :] = INIT_POSITION[0, 0], INIT_POSITION[0, 1], INIT_POSITION[0, 2]
     wp_counters = np.array([0])
 
-    #### Initialize the logger #################################
-    logger = Logger(logging_freq_hz=control_freq_hz,
-                    num_drones=num_drones,
-                    output_folder=output_folder,
-                    colab=colab
-                    )
+    # #### Initialize the logger #################################
+    # logger = Logger(logging_freq_hz=control_freq_hz,
+    #                 num_drones=num_drones,
+    #                 output_folder=output_folder,
+    #                 colab=colab
+    #                 )
 
     #### Initialize the controllers ############################
     if drone in [DroneModel.CF2X, DroneModel.CF2P]:
@@ -140,7 +140,6 @@ def run(
             has_visualized=True
         # Stay at initial position if goal path has not been found
         if not goal_found:
-            print(action)
             action[0, :], _, _ = ctrl[0].computeControlFromState(control_timestep=env.CTRL_TIMESTEP,
                                                                  state=obs[0],
                                                                  target_pos=np.hstack([TARGET_POS[wp_counters[0], 0:2],
@@ -154,11 +153,11 @@ def run(
                 Trajectory = []
                 trajectory_has_computed = True
                 for index, node in enumerate(rrt.path_to_goal[1:], start=1):
-                    # Divide one edge into 48 waypoints
+                    # Divide one edge into waypoints
                     Trajectory.append(np.linspace(start=rrt.path_to_goal[index-1], stop=node, num=NUM_WP))
                 trajectory_counter = 0
 
-            if trajectory_counter < len(Trajectory)-1:
+            if trajectory_counter < len(Trajectory):
                 #### Compute control for the current way point #############
                 action[0, :], _, _ = ctrl[0].computeControlFromState(control_timestep=env.CTRL_TIMESTEP,
                                                                      state=obs[0],
@@ -180,12 +179,13 @@ def run(
 
 
         #### Log the simulation ####################################
-        for j in range(num_drones):
-            logger.log(drone=j,
-                       timestamp=i/env.CTRL_FREQ,
-                       state=obs[j],
-                       control=np.hstack([TARGET_POS[wp_counters[j], 0:2], INIT_POSITION[j, 2], INIT_ORIENTATION[j, :], np.zeros(6)])
-                       )
+        # for j in range(num_drones):
+        #
+            # logger.log(drone=j,
+            #            timestamp=i/env.CTRL_FREQ,
+            #            state=obs[j],
+            #            control=np.hstack([TARGET_POS[wp_counters[j], 0:2], INIT_POSITION[j, 2], INIT_ORIENTATION[j, :], np.zeros(6)])
+            #            )
 
         #### Printout ##############################################
         # env.render()
@@ -197,13 +197,13 @@ def run(
     #### Close the environment #################################
     env.close()
 
-    #### Save the simulation results ###########################
-    logger.save()
-    logger.save_as_csv("pid") # Optional CSV save
-
-    #### Plot the simulation results ###########################
-    if plot:
-        logger.plot()
+    # #### Save the simulation results ###########################
+    # logger.save()
+    # logger.save_as_csv("pid") # Optional CSV save
+    #
+    # #### Plot the simulation results ###########################
+    # if plot:
+    #     logger.plot()
 
 if __name__ == "__main__":
 
