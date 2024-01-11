@@ -25,7 +25,7 @@ DEFAULT_CONTROL_FREQ_HZ = 48
 DEFAULT_DURATION_SEC = 40
 DEFAULT_OUTPUT_FOLDER = 'results'
 DEFAULT_COLAB = False
-
+np.random.seed(1)
 
 
 
@@ -73,7 +73,8 @@ def run(
     GOAL_POSITION = np.array([3, 3, 2])
 
     # Set number of convex obstacles
-    num_obstacles = 100
+    num_obstacles = 250
+
 
     # Generate convex obstacles
     obstacles = RandomObstacles(num_obstacles=num_obstacles, goal_position=GOAL_POSITION, initial_position=INIT_POSITION)
@@ -82,8 +83,9 @@ def run(
     rrt = RRT(init_node=np.array([0, 0, 1]), goal_node=GOAL_POSITION)
 
     #### Initialize trajectory related parameters
-    # Number of waypoints between two nodes
-    NUM_WP = 100
+    # Number of waypoints between two nodes, reducing NUM_WP makes drone move faster
+    NUM_WP = int(control_freq_hz/2)
+    # NUM_WP = control_freq_hz
     # Target positions for one control period
     TARGET_POS = np.zeros((NUM_WP,3))
 
@@ -114,6 +116,19 @@ def run(
     goal_reached = False
     # Add text GOAl in simulation
     textID = p.addUserDebugText(text="GOAL", textPosition=GOAL_POSITION, textColorRGB=[0, 0, 0], textSize=1)
+
+    # Set camera postion
+    camera_target_position = GOAL_POSITION  # Target position the camera is looking at
+    camera_distance = 3.0  # Distance from the target position
+    camera_yaw = 80  # Yaw angle in degrees
+    camera_pitch = -30  # Pitch angle in degrees
+
+    p.resetDebugVisualizerCamera(
+        cameraDistance=camera_distance,
+        cameraYaw=camera_yaw,
+        cameraPitch=camera_pitch,
+        cameraTargetPosition=camera_target_position,
+    )
 
     for i in range(0, int(duration_sec*env.CTRL_FREQ)):
         #### Step the simulation ###################################
@@ -206,5 +221,4 @@ def run(
     #     logger.plot()
 
 if __name__ == "__main__":
-
     run()
