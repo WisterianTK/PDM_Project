@@ -224,9 +224,10 @@ def run(
         if gui:
             sync(i, START, env.CTRL_TIMESTEP)
 
-    log_data['total_error'] = total_error.tolist()
+    log_data['total_error'] = float(np.linalg.norm(total_error))
     log_data['goal_found'] = goal_found
     log_data['goal_reached'] = goal_reached
+    log_data['collision_checks'] = rrt.collision_check_counter
     with open("rrt_log.json", 'a') as out_file:
         out_file.write(json.dumps(log_data)+'\n')
     

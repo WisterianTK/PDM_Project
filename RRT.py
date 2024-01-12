@@ -4,7 +4,7 @@ import pybullet as p
 
 # RRT class
 class RRT:
-    def __init__(self, init_node, goal_node, step_size=0.4, config_box=((-10, -10, 0), (10, 10, 3)), max_iter=300, margin=0.1, drone_radius=0.5):
+    def __init__(self, init_node, goal_node, step_size=0.4, config_box=((-10, -10, 0), (10, 10, 3)), max_iter=300, margin=0.1, drone_radius=0.1):
         # init_node: Initial node np.array(x, y, z)
         # goal_node: Goal node np.array(x, y, z)
         # step_size: Step size for the expansion of node
@@ -25,6 +25,7 @@ class RRT:
         self.drone_radius = drone_radius
         self.step_size = step_size
         self.path_to_goal = None
+        self.collision_check_counter = 0
 
     def runAlgorithm(self, obstacles):
         # obstacles: class instance from Obstacles.py
@@ -82,6 +83,7 @@ class RRT:
         # False for no collision
         collision_flag = False
         eq = 0
+        self.collision_check_counter += 1
         for i in range(obstacles.num_obstacles):
             # A B C matrices of hyperplanes, shape:(number of simplex, 3)
             ABC_matrices = obstacles.convexHulls[i].equations[:, 0:3]
