@@ -1,2 +1,4 @@
-/results
-/__pycache__
+gym_pybullet_drones/
+results/
+__pycache__/
+rrt_log.json
