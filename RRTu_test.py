@@ -13,12 +13,12 @@ planeId = p.loadURDF("plane.urdf")
 
 
 
-goal_position = np.array([6, 6, 3])
+goal_position = np.array([10, 0, 2])
 init_position = np.array([0, 0, 1])
 # Generate obstacles
-obstacles = RandomObstacles(num_obstacles=0, goal_position=goal_position, initial_position=init_position)
+obstacles = RandomObstacles(num_obstacles=10, goal_position=goal_position, initial_position=init_position, meshScale=0.4)
 
-rrt = RRTu(init_position=init_position, goal_position=goal_position, max_iter=50)
+rrt = RRTu(init_position=init_position, goal_position=goal_position, step_size_delta_time=0.4, max_iter=200, time_limit=3)
 
 # drawPoint([0,0,2], color=[0,1,0], size=0.2)
 # drawPoint([-1,1,5], color=[1,0,0], size=0.2)
@@ -32,8 +32,17 @@ rrt = RRTu(init_position=init_position, goal_position=goal_position, max_iter=50
 
 # drawPolynomial(foundneighbor.position, foundneighbor.velocities, acc, dt)
 
-rrt.runAlgorithm(obstacles)
+algoFlag = rrt.runAlgorithm(obstacles)
 print("Done")
+if algoFlag:
+    path = list(rrt.tracePath())
+    print(f"Path found!: {len(path)}")
+
+    for i in range(len(path)-1):
+        drawPolynomial(path[i].position, path[i].velocities, path[i+1].accelerations, path[i+1].dt)
+        #print(n)
+else:
+    print("No path found")
 # print(rrt.runAlgorithm(obstacles))
 
 # for path in rrt.paths:
