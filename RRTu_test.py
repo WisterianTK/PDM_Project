@@ -16,7 +16,7 @@ planeId = p.loadURDF("plane.urdf")
 goal_position = np.array([10, 0, 2])
 init_position = np.array([0, 0, 1])
 # Generate obstacles
-obstacles = RandomObstacles(num_obstacles=10, goal_position=goal_position, initial_position=init_position, meshScale=0.4)
+obstacles = RandomObstacles(num_obstacles=100, goal_position=goal_position, initial_position=init_position, meshScale=0.1)
 
 rrt = RRTu(init_position=init_position, goal_position=goal_position, step_size_delta_time=0.4, max_iter=200, time_limit=3)
 
