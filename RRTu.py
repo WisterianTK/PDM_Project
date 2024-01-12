@@ -68,6 +68,7 @@ class RRTu:
         self.drone_radius = drone_radius
         self.obstacles = None
         self.time_limit = time_limit
+        self.collision_check_counter = 0
 
         self.nodes = [Node(init_position)]
         self.goal = Node(goal_position)
@@ -183,6 +184,7 @@ class RRTu:
         # False for no collision
         collision_flag = False
         eq = 0
+        self.collision_check_counter += 1
         for i in range(self.obstacles.num_obstacles):
             # A B C matrices of hyperplanes, shape:(number of simplex, 3)
             ABC_matrices = self.obstacles.convexHulls[i].equations[:, 0:3]
