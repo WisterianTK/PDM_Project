@@ -11,11 +11,13 @@ p.setAdditionalSearchPath(pybullet_data.getDataPath())
 p.setGravity(0, 0, -10)
 planeId = p.loadURDF("plane.urdf")
 
-meshScale = [.5, .5, .5]
 
-goal_position = np.array([5, 5, 5])
-init_position = np.array([0, 0, 2])
-obstacles = RandomObstacles(0, goal_position=goal_position)
+
+goal_position = np.array([6, 6, 3])
+init_position = np.array([0, 0, 1])
+# Generate obstacles
+obstacles = RandomObstacles(num_obstacles=0, goal_position=goal_position, initial_position=init_position)
+
 rrt = RRTu(init_position=init_position, goal_position=goal_position, max_iter=50)
 
 # drawPoint([0,0,2], color=[0,1,0], size=0.2)

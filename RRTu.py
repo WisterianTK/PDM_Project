@@ -47,7 +47,7 @@ class Node(object):
 
 # RRTu class
 class RRTu:
-    def __init__(self, init_position, goal_position, step_size_delta_time=0.4, goal_probability=0.1, max_velocity = 5, max_acceleration = 100, config_box=((-4, -4, 0), (4, 4, 8)), max_iter=300, margin=0.5):
+    def __init__(self, init_position, goal_position, step_size_delta_time=0.4, goal_probability=0.1, max_velocity = 5, max_acceleration = 100, config_box=((-4, -4, 0), (4, 4, 8)), max_iter=300, margin=0.5, drone_radius=0.1):
         # init_node: Initial node np.array(x, y, z)
         # goal_node: Goal node np.array(x, y, z)
         # config_box: Bounding box of the configuration space ((x, y, z), (x, y, z)) (since uniformly sampling in infinitely large space isn't efficient)
@@ -58,6 +58,7 @@ class RRTu:
         self.max_velocity = max_velocity
         self.max_acceleration = max_acceleration
         self.step_size_delta_time = step_size_delta_time
+        self.drone_radius = drone_radius
 
         
 
