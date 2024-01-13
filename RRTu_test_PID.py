@@ -46,7 +46,8 @@ def run(
         duration_sec=DEFAULT_DURATION_SEC,
         output_folder=DEFAULT_OUTPUT_FOLDER,
         colab=DEFAULT_COLAB,
-        seed=DEFAULT_SEED
+        seed=DEFAULT_SEED,
+        NUM_WP=600
         ):
 
     #### Initialize the simulation #############################
@@ -87,15 +88,14 @@ def run(
 
     #### Initialize trajectory related parameters
     # Number of waypoints between two nodes, reducing NUM_WP makes drone move faster
-    NUM_WP = int(control_freq_hz/2)
-    NUM_WP = 200
+    #NUM_WP = int(control_freq_hz/2)
     # NUM_WP = control_freq_hz
     # Target positions for one control period
-    TARGET_POS = np.zeros((NUM_WP,3))
+    #TARGET_POS = np.zeros((NUM_WP,3))
 
     # Stay at the initial position
-    for i in range(NUM_WP):
-        TARGET_POS[i, :] = INIT_POSITION[0, 0], INIT_POSITION[0, 1], INIT_POSITION[0, 2]
+    # for i in range(NUM_WP):
+    #     TARGET_POS[i, :] = INIT_POSITION[0, 0], INIT_POSITION[0, 1], INIT_POSITION[0, 2]
     wp_counters = np.array([0])
 
     # #### Initialize the logger #################################
@@ -117,7 +117,10 @@ def run(
     log_data['seed'] = seed
     log_data['start_time'] = time.time()
     log_data['planner_time'] = 0.
-    log_data['drone_time'] = 0.
+    log_data['drone_realtime'] = 0.
+    log_data['drone_simtime'] = 0.
+    drone_cycles = 0
+    simtime = 0
     total_error = np.zeros(3)
     goal_found = False
     removed = False
@@ -141,6 +144,7 @@ def run(
     )
 
     for i in range(0, int(duration_sec*env.CTRL_FREQ)): #int(duration_sec*env.CTRL_FREQ)
+        simtime += 1
         #### Step the simulation ###################################
         obs, reward, terminated, truncated, info = env.step(action)
 
@@ -149,77 +153,24 @@ def run(
             goal_found = rrt.runAlgorithm(obstacles=obstacles)
             if goal_found:
                 log_data['planner_time'] = time.time() - log_data['start_time']
-                # path = list(rrt.tracePath())
-                # print(f"Path found!: {len(path)}")
-
-                # for i in range(len(path)-1):
-                #     drawPolynomial(path[i].position, path[i].velocities, path[i+1].accelerations, path[i+1].dt)
-        # Remove all edges and visualize the path to the goal
-        # elif not has_visualized:
-        #     # print("Path found")
-        #     # Remove all edges
-        #     if not removed:
-        #         p.removeAllUserDebugItems()
-        #         removed = True
-        #     # Add Goal text again
-        #     textID = p.addUserDebugText(text="GOAL", textPosition=GOAL_POSITION, textColorRGB=[0, 0, 0], textSize=3)
-        #     # Add the path to the goal
-        #     for index, node in enumerate(rrt.path_to_goal[1:], start=1):
-        #         p.addUserDebugLine(lineFromXYZ=rrt.path_to_goal[index - 1], lineToXYZ=node, lineColorRGB=[0, 1, 0],
-        #                            lineWidth=2)
-            # has_visualized=True
-        # Stay at initial position if goal path has not been found
-
-        # From here on I'm unsure how to put the drone on the path            
-
 
 
         if not goal_found:
             action[0, :], _, _ = ctrl[0].computeControlFromState(control_timestep=env.CTRL_TIMESTEP,
                                                                  state=obs[0],
-                                                                 target_pos=np.hstack([TARGET_POS[wp_counters[0], 0:2],
-                                                                                      INIT_POSITION[0, 2]]),
+                                                                 target_pos=INIT_POSITION,
                                                                  target_rpy=INIT_ORIENTATION[0, :]
                                                                  )
 
         # Follow the path to the goal
         if goal_found and not goal_reached:
-            # if not trajectory_has_computed:
-            #     trajectory = []
-            #     trajectory_has_computed = True
 
-            #     path = list(rrt.tracePath())
-            #     print(f"Path found!: {len(path)}")
-            #     for i in range(len(path)-1):
-            #         for point in rrt.sample_polynomial(path[i].position, path[i].velocities, path[i+1].accelerations, path[i+1].dt, num_segments=300):
-            #             trajectory.append(point)
-            #     trajectory = np.array(trajectory)
-
-            #     for i in range(trajectory.shape[0]-1):
-            #         p.addUserDebugLine(lineFromXYZ=trajectory[i], lineToXYZ=trajectory[i+1], lineColorRGB=[0, 1, 0], lineWidth=2)
-            #     trajectory_counter = 0
-            #     print("TRAJ LENGTH: ", trajectory.shape)
-
-            # if trajectory_counter < trajectory.shape[0]:
-            #     #### Compute control for the current way point #############
-            #     action[0, :], _, _ = ctrl[0].computeControlFromState(control_timestep=env.CTRL_TIMESTEP,
-            #                                                          state=obs[0],
-            #                                                          target_pos=trajectory[trajectory_counter],
-            #                                                         )
-                
-            #     # Collect total error for comparison
-            #     total_error += np.absolute(trajectory[trajectory_counter]-obs[0,:3])
-            #     #print(np.absolute(trajectory[trajectory_counter]-obs[0,:3]))
-            #     trajectory_counter += 1
-            #     print("LETSOOOO")
-
-            #     if trajectory_counter == trajectory.shape[0]:
-            #         goal_reached = True
             if not trajectory_has_computed:
                 Trajectory = []
                 trajectory_has_computed = True
                 path = list(rrt.tracePath())
                 print(f"Path found!: {len(path)}")
+                NUM_WP = int(NUM_WP/len(path))
                 for i in range(len(path)-1):
                     # Divide one edge into waypoints
                     sub_traj = []
@@ -227,13 +178,14 @@ def run(
                         sub_traj.append(point)
                     Trajectory.append(np.array(sub_traj))
                 trajectory_counter = 0
-                print(Trajectory)
+
                 for traj in Trajectory:
                     for i in range(traj.shape[0]-1):
                         p.addUserDebugLine(lineFromXYZ=traj[i], lineToXYZ=traj[i+1], lineColorRGB=[0, 1, 0], lineWidth=2)
 
             if trajectory_counter < len(Trajectory):
                 #### Compute control for the current way point #############
+                drone_cycles += 1
                 action[0, :], _, _ = ctrl[0].computeControlFromState(control_timestep=env.CTRL_TIMESTEP,
                                                                     state=obs[0],
                                                                     target_pos=Trajectory[trajectory_counter][wp_counters[0],:]
@@ -241,7 +193,6 @@ def run(
                 
                 # Collect total error for comparison
                 total_error += np.absolute(Trajectory[trajectory_counter][wp_counters[0],:]-obs[0,:3])
-                print(trajectory_counter)
 
                 if not wp_counters[0] < (NUM_WP-1):
                     trajectory_counter += 1
@@ -257,16 +208,17 @@ def run(
                                                                  state=obs[0],
                                                                  target_pos=GOAL_POSITION,
                                                                  )
-            if np.all(np.absolute(GOAL_POSITION-obs[0,:3]) <= 0.15):
+            if np.all(np.absolute(GOAL_POSITION-obs[0,:3]) <= 0.15) and np.all(obs[0, 3:6] < 0.1):
                 print("goal reached")
-                log_data['drone_time'] = time.time() - log_data['start_time'] - log_data['planner_time']
+                log_data['drone_realtime'] = time.time() - log_data['start_time'] - log_data['planner_time']
+                log_data['drone_simtime'] = drone_cycles / control_freq_hz
                 break
         
         #### Log the simulation ####################################
         logger.log(drone=0,
                     timestamp=i/env.CTRL_FREQ,
                     state=obs[0],
-                    control=np.hstack([TARGET_POS[wp_counters[0], 0:2], INIT_POSITION[0, 2], INIT_ORIENTATION[0, :], np.zeros(6)])
+                    #control=np.hstack([TARGET_POS[wp_counters[0], 0:2], INIT_POSITION[0, 2], INIT_ORIENTATION[0, :], np.zeros(6)])
                     )
         
         #### Printout ##############################################
@@ -280,6 +232,7 @@ def run(
     log_data['goal_found'] = goal_found
     log_data['goal_reached'] = goal_reached
     log_data['collision_checks'] = rrt.collision_check_counter
+    log_data['simtime'] = simtime / control_freq_hz
     with open("rrt_log.json", 'a') as out_file:
         out_file.write(json.dumps(log_data)+'\n')
     
@@ -291,8 +244,8 @@ def run(
     #logger.save_as_csv("pid") # Optional CSV save
     #
     # #### Plot the simulation results ###########################
-    # if plot:
-    #     logger.plot()
+    if plot:
+        logger.plot()
 
 if __name__ == "__main__":
     run()

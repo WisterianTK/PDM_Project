@@ -44,7 +44,8 @@ def run(
         duration_sec=DEFAULT_DURATION_SEC,
         output_folder=DEFAULT_OUTPUT_FOLDER,
         colab=DEFAULT_COLAB,
-        seed=DEFAULT_SEED
+        seed=DEFAULT_SEED,
+        NUM_WP=600
         ):
 
     #### Initialize the simulation #############################
@@ -85,14 +86,14 @@ def run(
 
     #### Initialize trajectory related parameters
     # Number of waypoints between two nodes, reducing NUM_WP makes drone move faster
-    NUM_WP = int(control_freq_hz/2)
+    #NUM_WP = int(control_freq_hz/2)
     # NUM_WP = control_freq_hz
     # Target positions for one control period
-    TARGET_POS = np.zeros((NUM_WP,3))
+    # TARGET_POS = np.zeros((NUM_WP,3))
 
-    # Stay at the initial position
-    for i in range(NUM_WP):
-        TARGET_POS[i, :] = INIT_POSITION[0, 0], INIT_POSITION[0, 1], INIT_POSITION[0, 2]
+    # # Stay at the initial position
+    # for i in range(NUM_WP):
+    #     TARGET_POS[i, :] = INIT_POSITION[0, 0], INIT_POSITION[0, 1], INIT_POSITION[0, 2]
     wp_counters = np.array([0])
 
     # #### Initialize the logger #################################
@@ -114,7 +115,10 @@ def run(
     log_data['seed'] = seed
     log_data['start_time'] = time.time()
     log_data['planner_time'] = 0.
-    log_data['drone_time'] = 0.
+    log_data['drone_realtime'] = 0.
+    log_data['drone_simtime'] = 0.
+    simtime = 0
+    drone_cycles = 0
     total_error = np.zeros(3)
     goal_found = False
     removed = False
@@ -138,6 +142,7 @@ def run(
     )
 
     for i in range(0, int(duration_sec*env.CTRL_FREQ)): #int(duration_sec*env.CTRL_FREQ)
+        simtime += 1
         #### Step the simulation ###################################
         obs, reward, terminated, truncated, info = env.step(action)
 
@@ -146,8 +151,8 @@ def run(
             goal_found = rrt.runAlgorithm(obstacles=obstacles)
             if goal_found:
                 log_data['planner_time'] = time.time() - log_data['start_time']
-            for path in rrt.paths:
-                p.addUserDebugLine(lineFromXYZ=path[0], lineToXYZ=path[1], lineColorRGB=[1, 0, 0])
+                for path in rrt.paths:
+                    p.addUserDebugLine(lineFromXYZ=path[0], lineToXYZ=path[1], lineColorRGB=[1, 0, 0])
         # Remove all edges and visualize the path to the goal
         elif not has_visualized:
             # print("Path found")
@@ -157,28 +162,29 @@ def run(
                 removed = True
             # Add Goal text again
             textID = p.addUserDebugText(text="GOAL", textPosition=GOAL_POSITION, textColorRGB=[0, 0, 0], textSize=3)
-            # Add the path to the goal
-            for index, node in enumerate(rrt.path_to_goal[1:], start=1):
-                p.addUserDebugLine(lineFromXYZ=rrt.path_to_goal[index - 1], lineToXYZ=node, lineColorRGB=[0, 1, 0],
-                                   lineWidth=2)
             has_visualized=True
         # Stay at initial position if goal path has not been found
         if not goal_found:
             action[0, :], _, _ = ctrl[0].computeControlFromState(control_timestep=env.CTRL_TIMESTEP,
                                                                  state=obs[0],
-                                                                 target_pos=np.hstack([TARGET_POS[wp_counters[0], 0:2],
-                                                                                      INIT_POSITION[0, 2]]),
+                                                                 target_pos=INIT_POSITION,
                                                                  target_rpy=INIT_ORIENTATION[0, :]
                                                                  )
 
         # Follow the path to the goal
         if goal_found and not goal_reached:
             if not trajectory_has_computed:
+                
                 Trajectory = []
                 trajectory_has_computed = True
+                NUM_WP = int(NUM_WP/len(rrt.nodes))
+                p.removeAllUserDebugItems()
+                textID = p.addUserDebugText(text="GOAL", textPosition=GOAL_POSITION, textColorRGB=[0, 0, 0], textSize=3)
                 for index, node in enumerate(rrt.path_to_goal[1:], start=1):
                     # Divide one edge into waypoints
                     Trajectory.append(np.linspace(start=rrt.path_to_goal[index-1], stop=node, num=NUM_WP))
+                    for i in range(Trajectory[-1].shape[0]-1):
+                        p.addUserDebugLine(lineFromXYZ=Trajectory[-1][i], lineToXYZ=Trajectory[-1][i+1], lineColorRGB=[0, 1, 0], lineWidth=2)                   
                 trajectory_counter = 0
 
             if trajectory_counter < len(Trajectory):
@@ -190,6 +196,7 @@ def run(
                 
                 # Collect total error for comparison
                 total_error += np.absolute(Trajectory[trajectory_counter][wp_counters[0],:]-obs[0,:3])
+                drone_cycles += 1
 
                 if not wp_counters[0] < (NUM_WP-1):
                     trajectory_counter += 1
@@ -205,16 +212,17 @@ def run(
                                                                  state=obs[0],
                                                                  target_pos=GOAL_POSITION,
                                                                  )
-            if np.all(np.absolute(GOAL_POSITION-obs[0,:3]) <= 0.15):
+
+            if np.all(np.absolute(GOAL_POSITION-obs[0,:3]) <= 0.15) and np.all(obs[0, 3:6] < 0.1):
                 print("goal reached")
-                log_data['drone_time'] = time.time() - log_data['start_time'] - log_data['planner_time']
+                log_data['drone_realtime'] = time.time() - log_data['start_time'] - log_data['planner_time']
+                log_data['drone_simtime'] = drone_cycles / control_freq_hz
                 break
         
         #### Log the simulation ####################################
         logger.log(drone=0,
                     timestamp=i/env.CTRL_FREQ,
                     state=obs[0],
-                    control=np.hstack([TARGET_POS[wp_counters[0], 0:2], INIT_POSITION[0, 2], INIT_ORIENTATION[0, :], np.zeros(6)])
                     )
         
         #### Printout ##############################################
@@ -228,6 +236,7 @@ def run(
     log_data['goal_found'] = goal_found
     log_data['goal_reached'] = goal_reached
     log_data['collision_checks'] = rrt.collision_check_counter
+    log_data['simtime'] = simtime / control_freq_hz
     with open("rrt_log.json", 'a') as out_file:
         out_file.write(json.dumps(log_data)+'\n')
     
