@@ -3,9 +3,9 @@ from RRTu_test_PID import run as RRTu
 import numpy as np
 
 # Seed range to test
-seed_start = 0
-seed_end = 50
-
+seed_start = 20
+seed_end = 101
+gui = False
 
 def main(seed_start, seed_end):
     print(f"STARTED COMPARISON FROM SEED {seed_start} to {seed_end}")
@@ -13,13 +13,13 @@ def main(seed_start, seed_end):
         print(f"------------------------------------------------------ COMPARING SEED {seed}")
         print(f"------------------------------------------------------ RUNNING RRT")
         try:
-            RRT(seed=seed)
+            RRT(seed=seed, gui=gui)
         except:
             print(f"------------------------------------------------------ RRT FAILED SEED {seed}")
         print(f"------------------------------------------------------ COMPARING SEED {seed}")
         print(f"------------------------------------------------------ RUNNING RRT-U")
         try:
-            RRTu(seed=seed)
+            RRTu(seed=seed, gui=gui)
         except:
             print(f"------------------------------------------------------ RRT-U FAILED SEED {seed}")
 

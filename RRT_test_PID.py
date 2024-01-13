@@ -6,6 +6,7 @@ import scipy as sp
 import numpy as np
 from Obstacles import RandomObstacles
 from RRT import RRT
+from util import write_json
 
 from gym_pybullet_drones.utils.enums import DroneModel, Physics
 from gym_pybullet_drones.envs.CtrlAviary import CtrlAviary
@@ -26,7 +27,7 @@ DEFAULT_CONTROL_FREQ_HZ = 48
 DEFAULT_DURATION_SEC = 40
 DEFAULT_OUTPUT_FOLDER = 'results'
 DEFAULT_COLAB = False
-DEFAULT_SEED = 1 #np.random.randint(0,100)
+DEFAULT_SEED = 19
 
 
 
@@ -45,7 +46,8 @@ def run(
         output_folder=DEFAULT_OUTPUT_FOLDER,
         colab=DEFAULT_COLAB,
         seed=DEFAULT_SEED,
-        NUM_WP=600
+        NUM_WP=1000,
+        GOAL_POSITION = np.array([4, 4, 1.5])
         ):
 
     #### Initialize the simulation #############################
@@ -72,8 +74,6 @@ def run(
     PYB_CLIENT = env.getPyBulletClient()
 
     # Set Goal position
-    GOAL_POSITION = np.array([3, 3, 2])
-
     # Set number of convex obstacles
     num_obstacles = 250
 
@@ -82,18 +82,18 @@ def run(
     obstacles = RandomObstacles(num_obstacles=num_obstacles, goal_position=GOAL_POSITION, initial_position=INIT_POSITION)
 
     # Initialize RRT
-    rrt = RRT(init_node=np.array([0, 0, 1]), goal_node=GOAL_POSITION)
+    rrt = RRT(init_node=np.array([0, 0, 1]), goal_node=GOAL_POSITION, drone_radius=0.2)
 
     #### Initialize trajectory related parameters
     # Number of waypoints between two nodes, reducing NUM_WP makes drone move faster
     #NUM_WP = int(control_freq_hz/2)
     # NUM_WP = control_freq_hz
     # Target positions for one control period
-    # TARGET_POS = np.zeros((NUM_WP,3))
+    TARGET_POS = np.zeros((NUM_WP,3))
 
     # # Stay at the initial position
-    # for i in range(NUM_WP):
-    #     TARGET_POS[i, :] = INIT_POSITION[0, 0], INIT_POSITION[0, 1], INIT_POSITION[0, 2]
+    for i in range(NUM_WP):
+        TARGET_POS[i, :] = INIT_POSITION[0, 0], INIT_POSITION[0, 1], INIT_POSITION[0, 2]
     wp_counters = np.array([0])
 
     # #### Initialize the logger #################################
@@ -118,6 +118,8 @@ def run(
     log_data['planner_time'] = 0.
     log_data['drone_realtime'] = 0.
     log_data['drone_simtime'] = 0.
+    log_data['goal_reached'] = False
+    algo_tries=0
     distance_travelled = np.zeros(3)
     simtime = 0
     drone_cycles = 0
@@ -151,6 +153,10 @@ def run(
         #### Run RRT
         if not goal_found:
             goal_found = rrt.runAlgorithm(obstacles=obstacles)
+            algo_tries += 1
+            if algo_tries > 15:
+                log_data['planner_time'] = time.time() - log_data['start_time']
+                break
             if goal_found:
                 log_data['planner_time'] = time.time() - log_data['start_time']
                 for path in rrt.paths:
@@ -164,12 +170,17 @@ def run(
                 removed = True
             # Add Goal text again
             textID = p.addUserDebugText(text="GOAL", textPosition=GOAL_POSITION, textColorRGB=[0, 0, 0], textSize=3)
+            # Add the path to the goal
+            for index, node in enumerate(rrt.path_to_goal[1:], start=1):
+                p.addUserDebugLine(lineFromXYZ=rrt.path_to_goal[index - 1], lineToXYZ=node, lineColorRGB=[0, 1, 0],
+                                   lineWidth=2)
             has_visualized=True
         # Stay at initial position if goal path has not been found
         if not goal_found:
             action[0, :], _, _ = ctrl[0].computeControlFromState(control_timestep=env.CTRL_TIMESTEP,
                                                                  state=obs[0],
-                                                                 target_pos=INIT_POSITION,
+                                                                 target_pos=np.hstack([TARGET_POS[wp_counters[0], 0:2],
+                                                                                      INIT_POSITION[0, 2]]),
                                                                  target_rpy=INIT_ORIENTATION[0, :]
                                                                  )
 
@@ -199,6 +210,9 @@ def run(
                 # Collect total error for comparison
                 total_error += np.absolute(Trajectory[trajectory_counter][wp_counters[0],:]-obs[0,:3])
                 drone_cycles += 1
+                
+                # Slow motion playback
+                # time.sleep(0.01)
 
                 if not wp_counters[0] < (NUM_WP-1):
                     trajectory_counter += 1
@@ -216,9 +230,10 @@ def run(
                                                                  )
 
             if np.all(np.absolute(GOAL_POSITION-obs[0,:3]) <= 0.15) and np.all(obs[0, 3:6] < 0.1):
-                print("goal reached")
+                print("----------------- goal reached")
                 log_data['drone_realtime'] = time.time() - log_data['start_time'] - log_data['planner_time']
                 log_data['drone_simtime'] = drone_cycles / control_freq_hz
+                log_data['goal_reached'] = True
                 break
 
         distance_travelled += np.absolute(obs[0, 3:6] / env.CTRL_FREQ)
@@ -234,15 +249,16 @@ def run(
         #### Sync the simulation ###################################
         if gui:
             sync(i, START, env.CTRL_TIMESTEP)
-
-    log_data['total_error'] = float(np.linalg.norm(total_error))
+    
     log_data['goal_found'] = goal_found
-    log_data['goal_reached'] = goal_reached
+    log_data['total_error'] = float(np.linalg.norm(total_error))
     log_data['collision_checks'] = rrt.collision_check_counter
     log_data['simtime'] = simtime / control_freq_hz
     log_data['distance_travelled'] = np.linalg.norm(distance_travelled).tolist()
-    with open("rrt_log.json", 'a') as out_file:
-        out_file.write(json.dumps(log_data)+'\n')
+    write_json(log_data, filename = 'rrt_log.json')
+    
+    # with open("rrt_log.json", 'a') as out_file:
+    #     out_file.write(json.dumps(log_data)+'\n')
     
     #### Close the environment #################################
     env.close()

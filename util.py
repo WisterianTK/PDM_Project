@@ -1,5 +1,7 @@
 import pybullet as p
 import numpy as np
+import json
+import os
 
 def drawPoint(point, color, size=0.1):
     assert len(point) == 3, "Input should be a numpy array of size 3"
@@ -58,3 +60,16 @@ def drawPolynomial(start_position, start_velocity, acceleration, delta_t, color=
         p2 = positions[i+1]
         #print("drawing: ", p1, p2)
         p.addUserDebugLine(p1.tolist(), p2.tolist(), color)
+
+def write_json(new_data, filename='rrt_log.json'):
+    if not os.path.isfile(filename):
+        with open(filename,'w') as file:
+            json.dump([new_data], file, indent=4)
+    else:
+        with open(filename,'r+') as file:
+            file_data = json.load(file)
+            file_data.append(new_data)
+            # Sets file's current position at offset.
+            file.seek(0)
+            # convert back to json.
+            json.dump(file_data, file, indent = 4)
