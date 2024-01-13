@@ -112,11 +112,13 @@ def run(
     action = np.zeros((1, 4))
     log_data = dict()
     START = time.time()
+    log_data['type'] = 'RRT'
     log_data['seed'] = seed
     log_data['start_time'] = time.time()
     log_data['planner_time'] = 0.
     log_data['drone_realtime'] = 0.
     log_data['drone_simtime'] = 0.
+    distance_travelled = np.zeros(3)
     simtime = 0
     drone_cycles = 0
     total_error = np.zeros(3)
@@ -218,7 +220,8 @@ def run(
                 log_data['drone_realtime'] = time.time() - log_data['start_time'] - log_data['planner_time']
                 log_data['drone_simtime'] = drone_cycles / control_freq_hz
                 break
-        
+
+        distance_travelled += np.absolute(obs[0, 3:6] / env.CTRL_FREQ)
         #### Log the simulation ####################################
         logger.log(drone=0,
                     timestamp=i/env.CTRL_FREQ,
@@ -237,6 +240,7 @@ def run(
     log_data['goal_reached'] = goal_reached
     log_data['collision_checks'] = rrt.collision_check_counter
     log_data['simtime'] = simtime / control_freq_hz
+    log_data['distance_travelled'] = np.linalg.norm(distance_travelled).tolist()
     with open("rrt_log.json", 'a') as out_file:
         out_file.write(json.dumps(log_data)+'\n')
     

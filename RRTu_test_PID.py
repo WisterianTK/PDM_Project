@@ -114,11 +114,13 @@ def run(
     action = np.zeros((1, 4))
     log_data = dict()
     START = time.time()
+    log_data['type'] = 'RRTu'
     log_data['seed'] = seed
     log_data['start_time'] = time.time()
     log_data['planner_time'] = 0.
     log_data['drone_realtime'] = 0.
     log_data['drone_simtime'] = 0.
+    distance_travelled = np.zeros(3)
     drone_cycles = 0
     simtime = 0
     total_error = np.zeros(3)
@@ -211,9 +213,11 @@ def run(
             if np.all(np.absolute(GOAL_POSITION-obs[0,:3]) <= 0.15) and np.all(obs[0, 3:6] < 0.1):
                 print("goal reached")
                 log_data['drone_realtime'] = time.time() - log_data['start_time'] - log_data['planner_time']
-                log_data['drone_simtime'] = drone_cycles / control_freq_hz
+                log_data['drone_simtime'] = drone_cycles / env.CTRL_FREQ
                 break
         
+        distance_travelled += np.absolute(obs[0, 3:6] / env.CTRL_FREQ)
+
         #### Log the simulation ####################################
         logger.log(drone=0,
                     timestamp=i/env.CTRL_FREQ,
@@ -233,6 +237,7 @@ def run(
     log_data['goal_reached'] = goal_reached
     log_data['collision_checks'] = rrt.collision_check_counter
     log_data['simtime'] = simtime / control_freq_hz
+    log_data['distance_travelled'] = np.linalg.norm(distance_travelled).tolist()
     with open("rrt_log.json", 'a') as out_file:
         out_file.write(json.dumps(log_data)+'\n')
     
@@ -244,8 +249,8 @@ def run(
     #logger.save_as_csv("pid") # Optional CSV save
     #
     # #### Plot the simulation results ###########################
-    if plot:
-        logger.plot()
+    # if plot:
+    #     logger.plot()
 
 if __name__ == "__main__":
     run()
