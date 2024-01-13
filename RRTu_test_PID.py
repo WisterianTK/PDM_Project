@@ -184,26 +184,33 @@ def run(
         # Follow the path to the goal
         if goal_found and not goal_reached:
             if not trajectory_has_computed:
-                Trajectory = []
+                trajectory = []
                 trajectory_has_computed = True
-                for index, node in enumerate(rrt.path_to_goal[1:], start=1):
-                    # Divide one edge into waypoints
-                    Trajectory.append(np.linspace(start=rrt.path_to_goal[index-1], stop=node, num=NUM_WP))
+
+                path = list(rrt.tracePath())
+                print(f"Path found!: {len(path)}")
+                for i in range(len(path)-1):
+                    for point in rrt.sample_polynomial(path[i].position, path[i].velocities, path[i+1].accelerations, path[i+1].dt):
+                        trajectory.append(point)
+                trajectory = np.array(trajectory)
+
+                for i in range(trajectory.shape[0]-1):
+                    p.addUserDebugLine(lineFromXYZ=trajectory[i], lineToXYZ=trajectory[i+1], lineColorRGB=[0, 1, 0])
                 trajectory_counter = 0
 
-            if trajectory_counter < len(Trajectory):
+            if trajectory_counter < len(trajectory.shape[0]):
                 #### Compute control for the current way point #############
                 action[0, :], _, _ = ctrl[0].computeControlFromState(control_timestep=env.CTRL_TIMESTEP,
                                                                      state=obs[0],
-                                                                     target_pos=Trajectory[trajectory_counter][wp_counters[0],:],
+                                                                     target_pos=trajectory[trajectory_counter],
                                                                     )
                 
                 # Collect total error for comparison
-                total_error += np.absolute(Trajectory[trajectory_counter][wp_counters[0],:]-obs[0,:3])
+                total_error += np.absolute(trajectory[trajectory_counter]-obs[0,:3])
 
                 if not wp_counters[0] < (NUM_WP-1):
                     trajectory_counter += 1
-                if trajectory_counter == len(Trajectory) and wp_counters==NUM_WP-1:
+                if trajectory_counter == trajectory.shape[0] and wp_counters==NUM_WP-1:
                     goal_reached = True
 
                 #### Go to the next way point and loop #####################
