@@ -83,11 +83,12 @@ def run(
     obstacles = RandomObstacles(num_obstacles=num_obstacles, goal_position=GOAL_POSITION, initial_position=INIT_POSITION)
 
     # Initialize RRT
-    rrt = RRTu(init_position=INIT_POSITION, goal_position=GOAL_POSITION, step_size_delta_time=0.4, max_iter=200, time_limit=3)
+    rrt = RRTu(init_position=INIT_POSITION[0], goal_position=GOAL_POSITION, step_size_delta_time=0.4, max_iter=200, time_limit=3)
 
     #### Initialize trajectory related parameters
     # Number of waypoints between two nodes, reducing NUM_WP makes drone move faster
     NUM_WP = int(control_freq_hz/2)
+    NUM_WP = 200
     # NUM_WP = control_freq_hz
     # Target positions for one control period
     TARGET_POS = np.zeros((NUM_WP,3))
@@ -148,11 +149,11 @@ def run(
             goal_found = rrt.runAlgorithm(obstacles=obstacles)
             if goal_found:
                 log_data['planner_time'] = time.time() - log_data['start_time']
-                path = list(rrt.tracePath())
-                print(f"Path found!: {len(path)}")
+                # path = list(rrt.tracePath())
+                # print(f"Path found!: {len(path)}")
 
-                for i in range(len(path)-1):
-                    drawPolynomial(path[i].position, path[i].velocities, path[i+1].accelerations, path[i+1].dt)
+                # for i in range(len(path)-1):
+                #     drawPolynomial(path[i].position, path[i].velocities, path[i+1].accelerations, path[i+1].dt)
         # Remove all edges and visualize the path to the goal
         # elif not has_visualized:
         #     # print("Path found")
@@ -183,34 +184,68 @@ def run(
 
         # Follow the path to the goal
         if goal_found and not goal_reached:
-            if not trajectory_has_computed:
-                trajectory = []
-                trajectory_has_computed = True
+            # if not trajectory_has_computed:
+            #     trajectory = []
+            #     trajectory_has_computed = True
 
+            #     path = list(rrt.tracePath())
+            #     print(f"Path found!: {len(path)}")
+            #     for i in range(len(path)-1):
+            #         for point in rrt.sample_polynomial(path[i].position, path[i].velocities, path[i+1].accelerations, path[i+1].dt, num_segments=300):
+            #             trajectory.append(point)
+            #     trajectory = np.array(trajectory)
+
+            #     for i in range(trajectory.shape[0]-1):
+            #         p.addUserDebugLine(lineFromXYZ=trajectory[i], lineToXYZ=trajectory[i+1], lineColorRGB=[0, 1, 0], lineWidth=2)
+            #     trajectory_counter = 0
+            #     print("TRAJ LENGTH: ", trajectory.shape)
+
+            # if trajectory_counter < trajectory.shape[0]:
+            #     #### Compute control for the current way point #############
+            #     action[0, :], _, _ = ctrl[0].computeControlFromState(control_timestep=env.CTRL_TIMESTEP,
+            #                                                          state=obs[0],
+            #                                                          target_pos=trajectory[trajectory_counter],
+            #                                                         )
+                
+            #     # Collect total error for comparison
+            #     total_error += np.absolute(trajectory[trajectory_counter]-obs[0,:3])
+            #     #print(np.absolute(trajectory[trajectory_counter]-obs[0,:3]))
+            #     trajectory_counter += 1
+            #     print("LETSOOOO")
+
+            #     if trajectory_counter == trajectory.shape[0]:
+            #         goal_reached = True
+            if not trajectory_has_computed:
+                Trajectory = []
+                trajectory_has_computed = True
                 path = list(rrt.tracePath())
                 print(f"Path found!: {len(path)}")
                 for i in range(len(path)-1):
-                    for point in rrt.sample_polynomial(path[i].position, path[i].velocities, path[i+1].accelerations, path[i+1].dt):
-                        trajectory.append(point)
-                trajectory = np.array(trajectory)
-
-                for i in range(trajectory.shape[0]-1):
-                    p.addUserDebugLine(lineFromXYZ=trajectory[i], lineToXYZ=trajectory[i+1], lineColorRGB=[0, 1, 0])
+                    # Divide one edge into waypoints
+                    sub_traj = []
+                    for point in rrt.sample_polynomial(path[i].position, path[i].velocities, path[i+1].accelerations, path[i+1].dt, num_segments=NUM_WP):
+                        sub_traj.append(point)
+                    Trajectory.append(np.array(sub_traj))
                 trajectory_counter = 0
+                print(Trajectory)
+                for traj in Trajectory:
+                    for i in range(traj.shape[0]-1):
+                        p.addUserDebugLine(lineFromXYZ=traj[i], lineToXYZ=traj[i+1], lineColorRGB=[0, 1, 0], lineWidth=2)
 
-            if trajectory_counter < len(trajectory.shape[0]):
+            if trajectory_counter < len(Trajectory):
                 #### Compute control for the current way point #############
                 action[0, :], _, _ = ctrl[0].computeControlFromState(control_timestep=env.CTRL_TIMESTEP,
-                                                                     state=obs[0],
-                                                                     target_pos=trajectory[trajectory_counter],
+                                                                    state=obs[0],
+                                                                    target_pos=Trajectory[trajectory_counter][wp_counters[0],:]
                                                                     )
                 
                 # Collect total error for comparison
-                total_error += np.absolute(trajectory[trajectory_counter]-obs[0,:3])
+                total_error += np.absolute(Trajectory[trajectory_counter][wp_counters[0],:]-obs[0,:3])
+                print(trajectory_counter)
 
                 if not wp_counters[0] < (NUM_WP-1):
                     trajectory_counter += 1
-                if trajectory_counter == trajectory.shape[0] and wp_counters==NUM_WP-1:
+                if trajectory_counter == len(Trajectory) and wp_counters==NUM_WP-1:
                     goal_reached = True
 
                 #### Go to the next way point and loop #####################
