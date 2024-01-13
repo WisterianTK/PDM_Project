@@ -63,15 +63,15 @@ class RandomObstacles:
 
             # Condition: the distance between base position of obstacle and goal should be larger than 1 AND
             # the distance between base position of obstacle and start node should be larger than 2
-            condition1 = np.linalg.norm(basePosition-goal_position) <= 0.5
-            condition2 = np.linalg.norm(basePosition - initial_position) <= 0.5
+            condition1 = np.linalg.norm(basePosition-goal_position) <= 1
+            condition2 = np.linalg.norm(basePosition - initial_position) <= 1.5
 
             while condition1 or condition2:
                 basePosition = np.array([np.random.randint(bounding_box[0][0], bounding_box[1][0]),
                                          np.random.randint(bounding_box[0][1], bounding_box[1][1]),
                                          np.random.randint(bounding_box[0][2], bounding_box[1][2])])
-                condition1 = np.linalg.norm(basePosition - goal_position) <= 0.5
-                condition2 = np.linalg.norm(basePosition - initial_position) <= 0.5
+                condition1 = np.linalg.norm(basePosition - goal_position) <= 1
+                condition2 = np.linalg.norm(basePosition - initial_position) <= 1.5
 
             # Save the base position
             self.basePositions.append(basePosition)
