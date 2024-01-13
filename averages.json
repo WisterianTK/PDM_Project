@@ -1,0 +1,26 @@
+{
+    "rrt":{
+       "start_time":1705154650.6692188,
+       "planner_time":0.48750959292496787,
+       "drone_realtime":0.22519011544709158,
+       "drone_simtime":3.4890676567656764,
+       "goal_reached":0.7128712871287128,
+       "goal_found":0.9900990099009901,
+       "total_error":122.91975594513589,
+       "collision_checks":212.92079207920793,
+       "simtime":15.740511551155114,
+       "distance_travelled":9.596345863817568
+    },
+    "rrtu":{
+       "start_time":1705154652.1829536,
+       "planner_time":5.201750660886859,
+       "drone_realtime":0.6888868667111538,
+       "drone_simtime":13.844471947194718,
+       "goal_reached":0.8910891089108911,
+       "goal_found":0.9801980198019802,
+       "total_error":176.21016809692006,
+       "collision_checks":2101.5148514851485,
+       "simtime":18.105610561056103,
+       "distance_travelled":2.1796940249240366
+    }
+ }
