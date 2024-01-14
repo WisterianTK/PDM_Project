@@ -1,10 +1,13 @@
 # Implimentation of RRT for point mass (Configuration: R^3)
 import numpy as np
 import pybullet as p
+from time import time
 
+def elapsedTime(startTime):
+    return time() - startTime
 # RRT class
 class RRT:
-    def __init__(self, init_node, goal_node, step_size=0.4, config_box=((-10, -10, 0), (10, 10, 3)), max_iter=300, margin=0.1, drone_radius=0.1):
+    def __init__(self, init_node, goal_node, step_size=0.4, time_limit=np.inf, config_box=((-10, -10, 0), (10, 10, 3)), max_iter=300, margin=0.1, drone_radius=0.1):
         # init_node: Initial node np.array(x, y, z)
         # goal_node: Goal node np.array(x, y, z)
         # step_size: Step size for the expansion of node
@@ -15,6 +18,7 @@ class RRT:
         self.init_node = init_node
         self.nodes = [init_node]
         self.goal = goal_node
+        self.time_limit = time_limit
         self.paths = []
         self.xrange = [config_box[0][0], config_box[1][0]]
         self.yrange = [config_box[0][1], config_box[1][1]]
@@ -25,12 +29,16 @@ class RRT:
         self.drone_radius = drone_radius
         self.step_size = step_size
         self.path_to_goal = None
+        self.path_length = np.inf
         self.collision_check_counter = 0
 
     def runAlgorithm(self, obstacles):
         # obstacles: class instance from Obstacles.py
 
-        for i in range(self.max_iter):
+        start_time = time()
+        i = 0
+        while (i < self.max_iter) and (elapsedTime(start_time) < self.time_limit):
+            i += 1
             # Randomly sample configuration & get neighbor node
             new_node, neighbor_node = self._sampleNode()
 
@@ -44,7 +52,7 @@ class RRT:
             new_path = self._findPath(neighbor_node, new_node)
 
             # Check if the path is collision-free
-            if self._pathCollisionCheck(new_path):
+            if self._pathCollisionCheck(new_path, obstacles):
                 # Get new sample
                 continue
 
@@ -104,12 +112,11 @@ class RRT:
 
 
     # Collision Checker for path
-    def _pathCollisionCheck(self, new_path):
-        pathCollisionInfo = p.rayTest(new_path[0], new_path[1])
-        if pathCollisionInfo[0][0] == -1:
-            return False
-        else:
-            return True
+    def _pathCollisionCheck(self, new_path, obstacles):
+        for point in np.linspace(start=new_path[0], stop=new_path[1], num=30):
+            if self._nodeCollisionCheck(point, obstacles):
+                return True
+        return False
 
     # Find the closest neighbor
     def _findNeighbor(self, new_node):
@@ -150,6 +157,11 @@ class RRT:
                 if np.all(path[1] == sorted_path[0]):
                     # insert the node to the sorted path
                     sorted_path.insert(0,path[0])
+        # Calculate path length
+        self.path_length = 0.0
+        for i in range(1,len(sorted_path)):
+            self.path_length += np.linalg.norm(sorted_path[i] - sorted_path[i-1])
+        print("RRT PATH LENGTH: ", self.path_length)
         return sorted_path
 
 

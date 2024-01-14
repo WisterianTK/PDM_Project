@@ -2,6 +2,10 @@ import pybullet as p
 import numpy as np
 import json
 import os
+from time import time
+
+def elapsedTime(startTime):
+    return time() - startTime
 
 def drawPoint(point, color, size=0.1):
     assert len(point) == 3, "Input should be a numpy array of size 3"

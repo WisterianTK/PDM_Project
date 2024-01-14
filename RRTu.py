@@ -2,11 +2,10 @@
 import numpy as np
 import pybullet as p
 
-from util import drawPoint, drawPolynomial
+from util import drawPoint, drawPolynomial, elapsedTime
 from time import time
 
-def elapsedTime(startTime):
-    return time() - startTime
+
 
 # implementation inspired by:
 # https://github.com/yijiangh/pybullet_planning/blob/dev/src/pybullet_planning/motion_planners/rrt_star.py
@@ -80,6 +79,8 @@ class RRTu:
         self.max_iter = max_iter
         self.goal_flag = False
         self.margin = margin
+        self.path_length = np.inf
+
 
         drawPoint(init_position, color=[0,1,0], size=0.2)
         drawPoint(goal_position, color=[1,0,0], size=0.2)
@@ -135,6 +136,7 @@ class RRTu:
                         self.goal.set_parent(step_node, dt=goal_dynamics[2])
                         self.goal.set_dynamics(goal_dynamics[0], goal_dynamics[1], goal_dynamics[2])
                         self.goal_flag = True
+                        self.tracePath()
             #n += 1
         return self.goal_flag
 
@@ -145,7 +147,16 @@ class RRTu:
         path_reverse = [self.goal]
         while path_reverse[-1].parent:
             path_reverse.append(path_reverse[-1].parent)
-        return reversed(path_reverse)
+
+        full_path = list(reversed(path_reverse))
+
+        self.path_length = 0.0
+        for i in range(0,len(full_path)):
+            self.path_length += full_path[i].dt
+        print("RRTU PATH LENGTH: ", self.path_length)
+        self.path_length *= 3
+        print("RRTU ADJUSTED PATH LENGTH: ", self.path_length)
+        return full_path
         
     # Random Sampler
     def _sampleNode(self):

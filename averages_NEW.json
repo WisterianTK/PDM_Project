@@ -1,0 +1,24 @@
+[
+    {
+        "RRT": {
+            "percentageGoalFound": 0.85,
+            "percentageGoalReachedWhenGoalFound": 0.9411764705882353,
+            "averageDroneRealtime": 0.11781878173351287,
+            "averageDroneSimtime": 4.8973958333333325,
+            "averageErrorX": 70.82110761871874,
+            "averageErrorY": 70.70904695040815,
+            "averageErrorZ": 10.501230427855813,
+            "averageDistance": 7.254308992439863
+        },
+        "RRTU": {
+            "percentageGoalFound": 0.98,
+            "percentageGoalReachedWhenGoalFound": 0.9387755102040817,
+            "averageDroneRealtime": 0.07528774893802145,
+            "averageDroneSimtime": 3.1082427536231894,
+            "averageErrorX": 84.30583023426436,
+            "averageErrorY": 84.05576516062737,
+            "averageErrorZ": 9.580176804354434,
+            "averageDistance": 6.758024671168361
+        }
+    }
+]
