@@ -1412,5 +1412,61 @@
         "collision_checks": 104,
         "simtime": 40.0,
         "distance_travelled": 32.569317589622536
+    },
+    {
+        "type": "RRT",
+        "seed": 19,
+        "start_time": 1705225708.8148432,
+        "planner_time": 14.78803014755249,
+        "drone_realtime": 0.0,
+        "drone_simtime": 0.0,
+        "goal_reached": false,
+        "goal_found": false,
+        "total_error": 0.0,
+        "collision_checks": 4800,
+        "simtime": 0.3333333333333333,
+        "distance_travelled": 0.0
+    },
+    {
+        "type": "RRT",
+        "seed": 5,
+        "start_time": 1705225780.9148536,
+        "planner_time": 0.8674774169921875,
+        "drone_realtime": 4.842775583267212,
+        "drone_simtime": 2.0833333333333335,
+        "goal_reached": true,
+        "goal_found": true,
+        "total_error": 117.25293870328352,
+        "collision_checks": 318,
+        "simtime": 3.1458333333333335,
+        "distance_travelled": 0.9463754780315492
+    },
+    {
+        "type": "RRT",
+        "seed": 5,
+        "start_time": 1705225953.265485,
+        "planner_time": 0.7907416820526123,
+        "drone_realtime": 2.2950024604797363,
+        "drone_simtime": 2.0833333333333335,
+        "goal_reached": true,
+        "goal_found": true,
+        "total_error": 117.25293870328352,
+        "collision_checks": 318,
+        "simtime": 3.1458333333333335,
+        "distance_travelled": 0.9463754780315492
+    },
+    {
+        "type": "RRT",
+        "seed": 5,
+        "start_time": 1705225978.898997,
+        "planner_time": 0.7862529754638672,
+        "drone_realtime": 2.299542188644409,
+        "drone_simtime": 2.0833333333333335,
+        "goal_reached": true,
+        "goal_found": true,
+        "total_error": 117.25293870328352,
+        "collision_checks": 318,
+        "simtime": 3.1458333333333335,
+        "distance_travelled": 0.9463754780315492
     }
 ]

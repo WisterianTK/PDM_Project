@@ -28,7 +28,7 @@ DEFAULT_CONTROL_FREQ_HZ = 48
 DEFAULT_DURATION_SEC = 40
 DEFAULT_OUTPUT_FOLDER = 'results'
 DEFAULT_COLAB = False
-DEFAULT_SEED = 2 #np.random.randint(0,100)
+DEFAULT_SEED = 5 #np.random.randint(0,100)
 
 
 
@@ -47,7 +47,7 @@ def run(
         output_folder=DEFAULT_OUTPUT_FOLDER,
         colab=DEFAULT_COLAB,
         seed=DEFAULT_SEED,
-        NUM_WP=1000,
+        NUM_WP=350,
         GOAL_POSITION = np.array([4., 4., 1.5])
         ):
 
@@ -186,9 +186,9 @@ def run(
                     Trajectory.append(np.array(sub_traj))
                 trajectory_counter = 0
 
-                for traj in Trajectory:
-                    for i in range(traj.shape[0]-1):
-                        p.addUserDebugLine(lineFromXYZ=traj[i], lineToXYZ=traj[i+1], lineColorRGB=[0, 1, 0], lineWidth=2)
+                # for traj in Trajectory:
+                #     for i in range(traj.shape[0]-1):
+                #         p.addUserDebugLine(lineFromXYZ=traj[i], lineToXYZ=traj[i+1], lineColorRGB=[0, 1, 0], lineWidth=2)
 
             if trajectory_counter < len(Trajectory):
                 #### Compute control for the current way point #############

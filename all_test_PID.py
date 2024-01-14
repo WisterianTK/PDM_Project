@@ -5,7 +5,7 @@ import pybullet_data
 import scipy as sp
 import numpy as np
 from Obstacles import RandomObstacles
-from RRT import RRT
+
 from util import write_json
 
 from gym_pybullet_drones.utils.enums import DroneModel, Physics
@@ -32,6 +32,8 @@ DEFAULT_SEED = 5
 
 
 def run(
+        run_algo_cb,
+        split_n_wp_cb,
         drone=DEFAULT_DRONES,
         num_drones=DEFAULT_NUM_DRONES,
         physics=DEFAULT_PHYSICS,
@@ -82,7 +84,11 @@ def run(
     obstacles = RandomObstacles(num_obstacles=num_obstacles, goal_position=GOAL_POSITION, initial_position=INIT_POSITION)
 
     # Initialize RRT
-    rrt = RRT(init_node=np.array([0, 0, 1]), goal_node=GOAL_POSITION, drone_radius=0.2)
+    algo, goal_found = run_algo_cb(obstacles, INIT_POSITION, GOAL_POSITION)
+    if not goal_found:
+        raise Exception("GOAL NOT FOUND")
+    
+    split_n_wp_cb()
 
     #### Initialize trajectory related parameters
     # Number of waypoints between two nodes, reducing NUM_WP makes drone move faster
@@ -112,22 +118,19 @@ def run(
     action = np.zeros((1, 4))
     log_data = dict()
     START = time.time()
-    log_data['type'] = 'RRT'
-    log_data['seed'] = seed
-    log_data['start_time'] = time.time()
-    log_data['planner_time'] = 0.
-    log_data['drone_realtime'] = 0.
-    log_data['drone_simtime'] = 0.
-    log_data['goal_reached'] = False
-    algo_tries=0
+    # log_data['type'] = 'RRT'
+    # log_data['seed'] = seed
+    # log_data['start_time'] = time.time()
+    # log_data['planner_time'] = 0.
+    # log_data['drone_realtime'] = 0.
+    # log_data['drone_simtime'] = 0.
+    # log_data['goal_reached'] = False
+
     distance_travelled = np.zeros(3)
     simtime = 0
     drone_cycles = 0
     total_error = np.zeros(3)
-    goal_found = False
-    removed = False
-    trajectory_has_computed = False
-    has_visualized = False
+
     goal_reached = False
     # Add text GOAl in simulation
     textID = p.addUserDebugText(text="GOAL", textPosition=GOAL_POSITION, textColorRGB=[0, 0, 0], textSize=1)
@@ -145,82 +148,38 @@ def run(
         cameraTargetPosition=camera_target_position,
     )
 
+
+
+    ####### SIM ################
+
     for i in range(0, int(duration_sec*env.CTRL_FREQ)): #int(duration_sec*env.CTRL_FREQ)
         simtime += 1
         #### Step the simulation ###################################
         obs, reward, terminated, truncated, info = env.step(action)
 
-        #### Run RRT
-        if not goal_found:
-            goal_found = rrt.runAlgorithm(obstacles=obstacles)
-            algo_tries += 1
-            if algo_tries > 15:
-                log_data['planner_time'] = time.time() - log_data['start_time']
-                break
-            if goal_found:
-                log_data['planner_time'] = time.time() - log_data['start_time']
-                # for path in rrt.paths:
-                #     p.addUserDebugLine(lineFromXYZ=path[0], lineToXYZ=path[1], lineColorRGB=[1, 0, 0])
-        # Remove all edges and visualize the path to the goal
-        elif not has_visualized:
-            # print("Path found")
-            # Remove all edges
-            if not removed:
-                p.removeAllUserDebugItems()
-                removed = True
-            # Add Goal text again
-            textID = p.addUserDebugText(text="GOAL", textPosition=GOAL_POSITION, textColorRGB=[0, 0, 0], textSize=3)
-            # Add the path to the goal
-            # for index, node in enumerate(rrt.path_to_goal[1:], start=1):
-            #     p.addUserDebugLine(lineFromXYZ=rrt.path_to_goal[index - 1], lineToXYZ=node, lineColorRGB=[0, 1, 0],
-            #                        lineWidth=2)
-            has_visualized=True
-        # Stay at initial position if goal path has not been found
-        if not goal_found:
-            action[0, :], _, _ = ctrl[0].computeControlFromState(control_timestep=env.CTRL_TIMESTEP,
-                                                                 state=obs[0],
-                                                                 target_pos=np.hstack([TARGET_POS[wp_counters[0], 0:2],
-                                                                                      INIT_POSITION[0, 2]]),
-                                                                 target_rpy=INIT_ORIENTATION[0, :]
-                                                                 )
-
         # Follow the path to the goal
-        if goal_found and not goal_reached:
-            if not trajectory_has_computed:
-                
-                Trajectory = []
-                trajectory_has_computed = True
-                NUM_WP = int(NUM_WP/len(rrt.nodes))
-                p.removeAllUserDebugItems()
-                textID = p.addUserDebugText(text="GOAL", textPosition=GOAL_POSITION, textColorRGB=[0, 0, 0], textSize=3)
-                for index, node in enumerate(rrt.path_to_goal[1:], start=1):
-                    # Divide one edge into waypoints
-                    Trajectory.append(np.linspace(start=rrt.path_to_goal[index-1], stop=node, num=NUM_WP))
-                    # for i in range(Trajectory[-1].shape[0]-1):
-                    #     p.addUserDebugLine(lineFromXYZ=Trajectory[-1][i], lineToXYZ=Trajectory[-1][i+1], lineColorRGB=[0, 1, 0], lineWidth=2)                   
-                trajectory_counter = 0
 
-            if trajectory_counter < len(Trajectory):
-                #### Compute control for the current way point #############
-                action[0, :], _, _ = ctrl[0].computeControlFromState(control_timestep=env.CTRL_TIMESTEP,
-                                                                     state=obs[0],
-                                                                     target_pos=Trajectory[trajectory_counter][wp_counters[0],:],
-                                                                    )
-                
-                # Collect total error for comparison
-                total_error += np.absolute(Trajectory[trajectory_counter][wp_counters[0],:]-obs[0,:3])
-                drone_cycles += 1
-                
+    
+        #### Compute control for the current way point #############
+        action[0, :], _, _ = ctrl[0].computeControlFromState(control_timestep=env.CTRL_TIMESTEP,
+                                                                state=obs[0],
+                                                                target_pos=Trajectory[trajectory_counter][wp_counters[0],:],
+                                                            )
+        
+        # Collect total error for comparison
+        total_error += np.absolute(Trajectory[trajectory_counter][wp_counters[0],:]-obs[0,:3])
+        #drone_cycles += 1
+        
                 # Slow motion playback
                 # time.sleep(0.01)
 
-                if not wp_counters[0] < (NUM_WP-1):
-                    trajectory_counter += 1
-                if trajectory_counter == len(Trajectory) and wp_counters==NUM_WP-1:
-                    goal_reached = True
+                # if not wp_counters[0] < (NUM_WP-1):
+                #     trajectory_counter += 1
+        if trajectory_counter == len(Trajectory) and wp_counters==NUM_WP-1:
+            goal_reached = True
 
-                #### Go to the next way point and loop #####################
-                wp_counters[0] = wp_counters[0] + 1 if wp_counters[0] < (NUM_WP-1) else 0
+        #### Go to the next way point and loop #####################
+        wp_counters[0] = wp_counters[0] + 1
 
         if goal_reached:
             
@@ -250,18 +209,24 @@ def run(
         if gui:
             sync(i, START, env.CTRL_TIMESTEP)
     
-    log_data['goal_found'] = goal_found
-    log_data['total_error'] = float(np.linalg.norm(total_error))
-    log_data['collision_checks'] = rrt.collision_check_counter
-    log_data['simtime'] = simtime / control_freq_hz
-    log_data['distance_travelled'] = np.linalg.norm(distance_travelled).tolist()
-    write_json(log_data, filename = 'rrt_log.json')
+    # TODO CHECK IF FINAL OBS IN RANGE OF GOAL
+
+
+
+    # log_data['goal_found'] = goal_found
+    # log_data['total_error'] = float(np.linalg.norm(total_error))
+    # log_data['collision_checks'] = rrt.collision_check_counter
+    # log_data['simtime'] = simtime / control_freq_hz
+    # log_data['distance_travelled'] = np.linalg.norm(distance_travelled).tolist()
+    # write_json(log_data, filename = 'rrt_log.json')
     
     # with open("rrt_log.json", 'a') as out_file:
     #     out_file.write(json.dumps(log_data)+'\n')
     
     #### Close the environment #################################
-    env.close()
+    
+    # TODO
+    #env.close()
 
     # #### Save the simulation results ###########################
     #logger.save()
