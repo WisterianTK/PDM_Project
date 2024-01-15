@@ -10,8 +10,8 @@ from util import write_json
 parser = argparse.ArgumentParser(description="Compare algorithms script")
 
 # Add the arguments
-parser.add_argument('--seed_start', type=int, default=12345678, help='The start seed for the tests.')
-parser.add_argument('--num_seeds', type=int, default=5, help='The number of seeds to test.')
+parser.add_argument('--seed_start', type=int, default=1240918, help='The start seed for the tests.')
+parser.add_argument('--num_seeds', type=int, default=100, help='The number of seeds to test.')
 parser.add_argument('--gui', type=bool, default=False, help='Whether to use GUI or not.')
 parser.add_argument('--num_restarts', type=int, default=0, help='The number of restarts each algorithm is allowed.')
 parser.add_argument('--num_obstacles', type=int, default=30, help='The number of obstacles.')
@@ -167,7 +167,7 @@ def main():
                                                                                               split_n_wp_rrt, 
                                                                                               seed=seed, 
                                                                                               gui=gui, 
-                                                                                              SPEED_MULTIPLIER=11.5, # Lower speedmulti is faster
+                                                                                              SPEED_MULTIPLIER=20, # Lower speedmulti is faster
                                                                                               # Max speed, used in report: 20. 93% flight success rate
                                                                                               num_obstacles=num_obstacles) 
             # Store data
@@ -196,7 +196,7 @@ def main():
                                                                                               split_n_wp_rrtu, 
                                                                                               seed=seed, 
                                                                                               gui=gui, 
-                                                                                              SPEED_MULTIPLIER=10.0, # Lower speedmulti is faster
+                                                                                              SPEED_MULTIPLIER=18.0, # Lower speedmulti is faster
                                                                                               # Max speed, used in report: 18. 93% flight success rate
                                                                                               num_obstacles=num_obstacles) 
             # Store data
@@ -251,9 +251,9 @@ def main():
     print(averages['RRTU'])
 
     # Write all data to json files
-    write_json(datarrt, filename = 'data/rrt_data_NEW.json')
-    write_json(datarrtu, filename = 'data/rrtu_data_NEW.json')
-    write_json(averages, filename = 'data/averages_NEW.json')
+    write_json(datarrt, filename = 'data/rrt_data.json')
+    write_json(datarrtu, filename = 'data/rrtu_data.json')
+    write_json(averages, filename = 'data/averages.json')
 
 if __name__ == "__main__":
     main()

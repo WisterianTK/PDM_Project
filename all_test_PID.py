@@ -1,18 +1,16 @@
 import pybullet as p
 import time
-import json
-import pybullet_data
-import scipy as sp
+
 import numpy as np
 from Obstacles import RandomObstacles
 
-from util import write_json, drawPoint, elapsedTime
+from util import drawPoint, elapsedTime
 
 from gym_pybullet_drones.utils.enums import DroneModel, Physics
 from gym_pybullet_drones.envs.CtrlAviary import CtrlAviary
 from gym_pybullet_drones.control.DSLPIDControl import DSLPIDControl
 from gym_pybullet_drones.utils.Logger import Logger
-from gym_pybullet_drones.utils.utils import sync, str2bool
+from gym_pybullet_drones.utils.utils import sync
 
 DEFAULT_DRONES = DroneModel("cf2x")
 DEFAULT_NUM_DRONES = 1
