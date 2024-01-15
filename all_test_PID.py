@@ -29,8 +29,6 @@ DEFAULT_OUTPUT_FOLDER = 'results'
 DEFAULT_COLAB = False
 DEFAULT_SEED = 6
 
-
-
 def run(
         run_algo_cb,
         split_n_wp_cb,
@@ -49,7 +47,8 @@ def run(
         colab=DEFAULT_COLAB,
         seed=DEFAULT_SEED,
         SPEED_MULTIPLIER=40,
-        GOAL_POSITION = np.array([4, 4, 1.5])
+        GOAL_POSITION = np.array([4, 4, 1.5]),
+        num_obstacles=30
         ):
     #### Initialize the simulation #############################
     INIT_POSITION = np.array([[0, 0, 1]])
@@ -74,15 +73,9 @@ def run(
     #### Obtain the PyBullet Client ID from the environment ####
     PYB_CLIENT = env.getPyBulletClient()
 
-    # Set Goal position
-
+    # Draw goal and start position
     drawPoint(INIT_POSITION[0], [0,1,0], 0.2)
     drawPoint(GOAL_POSITION, [1,0,0], 0.2)
-
-
-    # Set number of convex obstacles
-    num_obstacles = 30
-
 
     # Generate convex obstacles
     obstacles = RandomObstacles(num_obstacles=num_obstacles, goal_position=GOAL_POSITION, 
@@ -105,9 +98,6 @@ def run(
         drawPoint(waypoints[i],[0.0,0.0,1.0], 0.04)
 
     #### Initialize trajectory related parameters
-    # Number of waypoints between two nodes, reducing NUM_WP makes drone move faster
-    #NUM_WP = int(control_freq_hz/2)
-    # NUM_WP = control_freq_hz
     # Target positions for one control period
     TARGET_POS = np.zeros((NUM_WP,3))
 
@@ -132,7 +122,7 @@ def run(
     action = np.zeros((1, 4))
     log_data = dict()
     
-
+    # Setup output values
     drone_realtime = 0.0
     drone_simtime = 0.0
     distance_traveled = 0.0
@@ -155,11 +145,13 @@ def run(
         cameraTargetPosition=camera_target_position,
     )
 
+    # Store previous location
     previous_location = INIT_POSITION[0]
     print("Starting flight sim")
     ####### SIM ################
     START = time.time()
     drone_cycles = 0
+    # Start simulator
     for i in range(0, int(duration_sec*env.CTRL_FREQ)): #int(duration_sec*env.CTRL_FREQ)
         drone_cycles += 1
         #### Step the simulation ###################################
@@ -173,14 +165,13 @@ def run(
         
         # Collect total error for comparison
         total_error += position_error
-
         distance_traveled += np.linalg.norm(obs[0][0:3] - previous_location)
 
         #### Go to the next way point and loop #####################
         if wp_counters[0] < NUM_WP-1:
             wp_counters[0] = wp_counters[0] + 1
 
-
+        # Check if we are at the goal position
         if np.linalg.norm(GOAL_POSITION-obs[0,:3]) <= 0.2:
             print("GOAL REACHED")
             goal_reached = True
@@ -204,16 +195,8 @@ def run(
         previous_location = obs[0][0:3]
     #### Close the environment #################################
     
-    # TODO
     env.close()
     return goal_reached, drone_realtime, drone_simtime, total_error.tolist(), distance_traveled
-    # #### Save the simulation results ###########################
-    #logger.save()
-    #logger.save_as_csv("pid") # Optional CSV save
-    #
-    # #### Plot the simulation results ###########################
-    # if plot:
-    #     logger.plot()
 
 if __name__ == "__main__":
     run()
