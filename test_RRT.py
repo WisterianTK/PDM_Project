@@ -24,6 +24,10 @@ def runRRT(obstacles, INIT_POSITION, GOAL_POSITION):
             print("Goal found")
             break
     # Return RRT object and boolean goal_found
+        
+    # Remove obstacles again after running the algorithm
+    for obs in obstacles.obstacleIDs:
+        p.removeBody(obs)
     return rrt, goal_found
 
 

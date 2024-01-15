@@ -4,6 +4,7 @@ from util import drawPolynomial
 import numpy as np
 import time
 from RRTu import RRTu
+import pybullet as p
 gui = True
 speed_multi = 30
 num_obstacles = 30
@@ -13,7 +14,7 @@ num_obstacles = 30
 def runRRTu(obstacles, INIT_POSITION, GOAL_POSITION):
     print(f"Running rrt: {INIT_POSITION, GOAL_POSITION}")
     # Initialize RRT-u
-    rrtu = RRTu(init_position=INIT_POSITION, goal_position=GOAL_POSITION, step_size_delta_time=0.4, max_iter=80, time_limit=np.inf, drone_radius=0.2, config_box=((-2, -2, 0), (6, 6, 4)))
+    rrtu = RRTu(init_position=INIT_POSITION, goal_position=GOAL_POSITION, step_size_delta_time=0.4, max_iter=40, time_limit=np.inf, drone_radius=0.2, config_box=((-2, -2, 0), (6, 6, 4)))
     for i in range(1):
         # Run RRT-u
         goal_found = rrtu.runAlgorithm(obstacles=obstacles)
@@ -22,6 +23,9 @@ def runRRTu(obstacles, INIT_POSITION, GOAL_POSITION):
             print("Goal found")
             break
     # Return RRTu object and boolean goal_found
+    # Remove obstacles again after running the algorithm
+    for obs in obstacles.obstacleIDs:
+        p.removeBody(obs)
     return rrtu, goal_found
 
 
