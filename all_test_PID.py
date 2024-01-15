@@ -145,6 +145,9 @@ def run(
         cameraTargetPosition=camera_target_position,
     )
 
+    # Uncomment to pause sim to capture visualizations
+    time.sleep(1000)
+
     # Store previous location
     previous_location = INIT_POSITION[0]
     print("Starting flight sim")

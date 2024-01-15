@@ -45,7 +45,7 @@ def drawPoint(point, color, size=0.1):
 #         print("drawing: ", p1, p2)
 #         p.addUserDebugLine(p1.tolist(), p2.tolist(), [r[i],0,r[i]])
     
-def drawPolynomial(start_position, start_velocity, acceleration, delta_t, color=[0, 1, 1], num_segments=100):
+def drawPolynomial(start_position, start_velocity, acceleration, delta_t, color=[0, 1, 1], num_segments=100, line_size=1):
     assert len(start_position) == 3, "Input should be a numpy array of size 3"
     assert len(start_velocity) == 3, "Input should be a numpy array of size 3"
     assert len(acceleration) == 3, "Input should be a numpy array of size 3"
@@ -63,7 +63,7 @@ def drawPolynomial(start_position, start_velocity, acceleration, delta_t, color=
         p1 = positions[i]
         p2 = positions[i+1]
         #print("drawing: ", p1, p2)
-        p.addUserDebugLine(p1.tolist(), p2.tolist(), color)
+        p.addUserDebugLine(p1.tolist(), p2.tolist(), color, lineWidth=line_size)
 
 def write_json(new_data, filename='rrt_log.json'):
     if not os.path.isfile(filename):

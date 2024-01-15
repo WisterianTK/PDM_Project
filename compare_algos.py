@@ -109,7 +109,7 @@ def sample_polynomial_on_velocity(start_position, start_velocity, acceleration, 
         yield start_position + start_velocity * t + 0.5 * acceleration * t**2
 
 # Callback function that splits the found rrt-u path into NUM_WP waypoints
-def split_n_wp_rrtu(rrtu, NUM_WP):
+def split_n_wp_rrtu(rrtu, NUM_WP, draw_lines=False):
     # Trace the found path
     # Store in a list of Nodes
     path_nodes = list(rrtu.tracePath())
@@ -143,6 +143,7 @@ def split_n_wp_rrtu(rrtu, NUM_WP):
         # Divide one edge into waypoints
         for point in sample_polynomial_on_velocity(path_nodes[i].position, path_nodes[i].velocities, path_nodes[i+1].accelerations, path_nodes[i+1].dt, num_samples=num_points_per_segment[i]):
             waypoints.append(point)
+            
 
     print(f"RRTU| NUMBER OF WAYPOINTS: {len(waypoints)}")
     return waypoints

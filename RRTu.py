@@ -112,14 +112,11 @@ class RRTu:
                 step_node = Node(step_node_position, step_node_velocities, new_node_accelerations, parent=neighbor_node, dt=self.step_size_delta_time)
             else:
                 step_node = Node(new_node.position, new_node_velocities, new_node_accelerations, parent=neighbor_node, dt=dt)
+                
 
             
             self.nodes.append(step_node)
             
-            #drawPolynomial(neighbor_node.position, neighbor_node.velocities, new_node_accelerations, self.step_size_delta_time)
-            #drawPoint(step_node.position, color=[0,0,1], size=0.05)
-            #drawPoint([-1,1,5], color=[1,0,0], size=0.2)
-
             # Check if there is a path to goal
             goal_dynamics = self._findPath(step_node, self.goal)
             if goal_dynamics:
@@ -128,9 +125,7 @@ class RRTu:
                     # No collision to goal
                     # Check total cost
                     new_total_cost = step_node.total_cost + goal_dynamics[2]
-                    #print("goalno coll")
-                    #print(self.goal.total_cost)
-                    #print(new_total_cost)
+
                     if self.goal.total_cost > new_total_cost:
                         print(f"Faster path to goal found, {n}")
                         self.goal.set_parent(step_node, dt=goal_dynamics[2])
