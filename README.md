@@ -40,7 +40,7 @@ The `compare_algo.py` script has a few command line parameters:
 ```
 For example, to run a single seed, with gui:
 ```
-python3 compare_algos.py --gui --num_seeds 1 --seed_start 1234
+python3 compare_algos.py --gui True --num_seeds 1 --seed_start 1234
 ```
 This runs both RRT and RRT-u on the same seed, once.
 
