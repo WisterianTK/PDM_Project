@@ -146,7 +146,7 @@ def run(
     )
 
     # Uncomment to pause sim to capture visualizations
-    time.sleep(1000)
+    #time.sleep(10000)
 
     # Store previous location
     previous_location = INIT_POSITION[0]
