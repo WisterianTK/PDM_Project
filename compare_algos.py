@@ -10,9 +10,9 @@ from util import write_json
 parser = argparse.ArgumentParser(description="Compare algorithms script")
 
 # Add the arguments
-parser.add_argument('--seed_start', type=int, default=1234567, help='The start seed for the tests.')
+parser.add_argument('--seed_start', type=int, default=12345678, help='The start seed for the tests.')
 parser.add_argument('--num_seeds', type=int, default=5, help='The number of seeds to test.')
-parser.add_argument('--gui', type=bool, default=True, help='Whether to use GUI or not.')
+parser.add_argument('--gui', type=bool, default=False, help='Whether to use GUI or not.')
 parser.add_argument('--num_restarts', type=int, default=0, help='The number of restarts each algorithm is allowed.')
 parser.add_argument('--num_obstacles', type=int, default=30, help='The number of obstacles.')
 parser.add_argument('--sample_box', type=tuple, default=((-2, -2, 0), (6, 6, 4)), help='The sample box for the algorithms.')
@@ -24,6 +24,7 @@ args = parser.parse_args()
 seed_start = args.seed_start
 num_seeds = args.num_seeds
 gui = args.gui
+print(gui)
 num_runs = args.num_restarts + 1
 num_obstacles = args.num_obstacles
 sample_box = args.sample_box
@@ -166,7 +167,7 @@ def main():
                                                                                               split_n_wp_rrt, 
                                                                                               seed=seed, 
                                                                                               gui=gui, 
-                                                                                              SPEED_MULTIPLIER=30, # Lower speedmulti is faster
+                                                                                              SPEED_MULTIPLIER=11.5, # Lower speedmulti is faster
                                                                                               # Max speed, used in report: 20. 93% flight success rate
                                                                                               num_obstacles=num_obstacles) 
             # Store data
@@ -195,7 +196,7 @@ def main():
                                                                                               split_n_wp_rrtu, 
                                                                                               seed=seed, 
                                                                                               gui=gui, 
-                                                                                              SPEED_MULTIPLIER=30, # Lower speedmulti is faster
+                                                                                              SPEED_MULTIPLIER=10.0, # Lower speedmulti is faster
                                                                                               # Max speed, used in report: 18. 93% flight success rate
                                                                                               num_obstacles=num_obstacles) 
             # Store data

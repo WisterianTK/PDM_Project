@@ -1192,5 +1192,2375 @@
             ],
             "distance_traveled": 5.626270250997079
         }
+    ],
+    [
+        {
+            "goal_found": true,
+            "goal_reached": false,
+            "drone_realtime": 0.0,
+            "drone_simtime": 0.0,
+            "total_error": [
+                -151.26080432602015,
+                -216.09844969516084,
+                1761.5026850288366
+            ],
+            "distance_traveled": 8.593544981301296
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.19217681884765625,
+            "drone_simtime": 6.854166666666667,
+            "total_error": [
+                79.48224068947812,
+                67.34912678215792,
+                10.088442475029938
+            ],
+            "distance_traveled": 6.899746509613067
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.23685336112976074,
+            "drone_simtime": 8.604166666666666,
+            "total_error": [
+                56.963313912084004,
+                49.859872538903055,
+                8.26925603338405
+            ],
+            "distance_traveled": 6.928859444196647
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.14191102981567383,
+            "drone_simtime": 4.625,
+            "total_error": [
+                78.53295140129502,
+                80.72408860665921,
+                8.578570295383388
+            ],
+            "distance_traveled": 5.7285442882521975
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.1856527328491211,
+            "drone_simtime": 6.770833333333333,
+            "total_error": [
+                68.52018609514838,
+                75.30802380434832,
+                8.097832656988697
+            ],
+            "distance_traveled": 6.8433828159298296
+        }
+    ],
+    [
+        {
+            "goal_found": true,
+            "goal_reached": false,
+            "drone_realtime": 0.0,
+            "drone_simtime": 0.0,
+            "total_error": [
+                -63.29040540611511,
+                835.7909913783657,
+                1533.4729383599258
+            ],
+            "distance_traveled": 7.24861348574825
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.2619647979736328,
+            "drone_simtime": 9.958333333333334,
+            "total_error": [
+                73.57657564632584,
+                56.20795765258641,
+                9.346126211458044
+            ],
+            "distance_traveled": 6.997901778573584
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.20955681800842285,
+            "drone_simtime": 7.729166666666667,
+            "total_error": [
+                77.09159691695032,
+                64.55600610765272,
+                8.647482954041761
+            ],
+            "distance_traveled": 6.7106679784327
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.20276331901550293,
+            "drone_simtime": 6.666666666666667,
+            "total_error": [
+                72.15173388479393,
+                75.86180647513376,
+                8.739508065887051
+            ],
+            "distance_traveled": 5.742456556298413
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.2603771686553955,
+            "drone_simtime": 9.791666666666666,
+            "total_error": [
+                56.75838379642936,
+                69.42670150597014,
+                7.809677468275943
+            ],
+            "distance_traveled": 6.869552656067292
+        }
+    ],
+    [
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.17994952201843262,
+            "drone_simtime": 6.6875,
+            "total_error": [
+                73.68274874174328,
+                75.26564143333947,
+                8.671451699569676
+            ],
+            "distance_traveled": 5.645769674801614
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.16109299659729004,
+            "drone_simtime": 6.0625,
+            "total_error": [
+                76.80152908124724,
+                79.06097855442194,
+                7.778531943804336
+            ],
+            "distance_traveled": 5.66641197936493
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.11891674995422363,
+            "drone_simtime": 4.375,
+            "total_error": [
+                79.3541213242149,
+                77.76162553585864,
+                12.186502986111163
+            ],
+            "distance_traveled": 5.988209083546326
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.15566253662109375,
+            "drone_simtime": 5.875,
+            "total_error": [
+                76.83991420910081,
+                75.76699620409991,
+                8.540685742204188
+            ],
+            "distance_traveled": 5.524411946070764
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.24200177192687988,
+            "drone_simtime": 10.5,
+            "total_error": [
+                79.24400830833414,
+                46.1573628821958,
+                8.015297146993717
+            ],
+            "distance_traveled": 8.140778775253027
+        }
+    ],
+    [
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.18407535552978516,
+            "drone_simtime": 6.6875,
+            "total_error": [
+                73.68274874174328,
+                75.26564143333947,
+                8.671451699569676
+            ],
+            "distance_traveled": 5.645769674801614
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.16524052619934082,
+            "drone_simtime": 6.0625,
+            "total_error": [
+                76.80152908124724,
+                79.06097855442194,
+                7.778531943804336
+            ],
+            "distance_traveled": 5.66641197936493
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.11962389945983887,
+            "drone_simtime": 4.375,
+            "total_error": [
+                79.3541213242149,
+                77.76162553585864,
+                12.186502986111163
+            ],
+            "distance_traveled": 5.988209083546326
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.17728614807128906,
+            "drone_simtime": 5.875,
+            "total_error": [
+                76.83991420910081,
+                75.76699620409991,
+                8.540685742204188
+            ],
+            "distance_traveled": 5.524411946070764
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.2537882328033447,
+            "drone_simtime": 10.5,
+            "total_error": [
+                79.24400830833414,
+                46.1573628821958,
+                8.015297146993717
+            ],
+            "distance_traveled": 8.140778775253027
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.13591432571411133,
+            "drone_simtime": 5.729166666666667,
+            "total_error": [
+                76.35214163888716,
+                75.23441126669908,
+                10.003444965932555
+            ],
+            "distance_traveled": 5.89014909881468
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.15925264358520508,
+            "drone_simtime": 6.833333333333333,
+            "total_error": [
+                71.32342870472148,
+                75.31727557518322,
+                8.971171151886532
+            ],
+            "distance_traveled": 6.088177381059131
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.17212963104248047,
+            "drone_simtime": 7.4375,
+            "total_error": [
+                74.75414222013502,
+                72.83006302904622,
+                8.851083884997745
+            ],
+            "distance_traveled": 5.668782053763069
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.17804288864135742,
+            "drone_simtime": 7.75,
+            "total_error": [
+                67.67049617737219,
+                75.71315680553752,
+                9.699826691419211
+            ],
+            "distance_traveled": 6.393563976424253
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.1396012306213379,
+            "drone_simtime": 5.958333333333333,
+            "total_error": [
+                75.81108516783203,
+                74.77945682997434,
+                8.990997549663568
+            ],
+            "distance_traveled": 5.629079522167812
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.1750190258026123,
+            "drone_simtime": 7.458333333333333,
+            "total_error": [
+                68.6275821168582,
+                75.77794881730746,
+                10.090115000029488
+            ],
+            "distance_traveled": 6.540763431936574
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.1495814323425293,
+            "drone_simtime": 6.354166666666667,
+            "total_error": [
+                73.0483824578203,
+                75.02772826438724,
+                8.570071573937515
+            ],
+            "distance_traveled": 5.612784733801234
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.1692206859588623,
+            "drone_simtime": 7.333333333333333,
+            "total_error": [
+                75.52247997605383,
+                71.06438010080318,
+                8.271795943341283
+            ],
+            "distance_traveled": 5.594101407114774
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.15819525718688965,
+            "drone_simtime": 6.875,
+            "total_error": [
+                70.09093632283624,
+                76.33849348631821,
+                7.78985577384807
+            ],
+            "distance_traveled": 5.950627442759139
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.20901966094970703,
+            "drone_simtime": 8.791666666666666,
+            "total_error": [
+                68.63543321865752,
+                73.26934516566975,
+                9.606517093261038
+            ],
+            "distance_traveled": 6.249764852155564
+        }
+    ],
+    [
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.1530137062072754,
+            "drone_simtime": 5.645833333333333,
+            "total_error": [
+                76.1269255672672,
+                77.6376866419049,
+                8.955914290427518
+            ],
+            "distance_traveled": 5.65241784746572
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.13930082321166992,
+            "drone_simtime": 5.166666666666667,
+            "total_error": [
+                80.3790588982116,
+                81.62904951439988,
+                7.87470250274812
+            ],
+            "distance_traveled": 5.665118804929005
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.10261774063110352,
+            "drone_simtime": 3.7291666666666665,
+            "total_error": [
+                82.44282586063457,
+                80.6256348408907,
+                11.756584206669435
+            ],
+            "distance_traveled": 5.923097658147683
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.13662314414978027,
+            "drone_simtime": 4.979166666666667,
+            "total_error": [
+                79.2798149269583,
+                78.25964581488115,
+                8.690533308636601
+            ],
+            "distance_traveled": 5.507170250144758
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.20746111869812012,
+            "drone_simtime": 8.854166666666666,
+            "total_error": [
+                81.4101043014949,
+                51.859407376206725,
+                8.365902470053811
+            ],
+            "distance_traveled": 8.14895127486224
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.11353230476379395,
+            "drone_simtime": 4.854166666666667,
+            "total_error": [
+                79.08216267165196,
+                78.43597561410603,
+                10.242358451210052
+            ],
+            "distance_traveled": 5.878253434307838
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.13500571250915527,
+            "drone_simtime": 5.791666666666667,
+            "total_error": [
+                75.19645376557104,
+                77.87714278975503,
+                9.185329978019436
+            ],
+            "distance_traveled": 6.076142340826635
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.14729809761047363,
+            "drone_simtime": 6.291666666666667,
+            "total_error": [
+                77.18929105645661,
+                75.1769201848316,
+                9.139904960074944
+            ],
+            "distance_traveled": 5.655128037275346
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.15535593032836914,
+            "drone_simtime": 6.5625,
+            "total_error": [
+                71.07405278667841,
+                78.31792755647594,
+                9.926032275854528
+            ],
+            "distance_traveled": 6.4109770083878015
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.1167905330657959,
+            "drone_simtime": 5.041666666666667,
+            "total_error": [
+                78.82394072078645,
+                78.71687054606065,
+                9.20496228883699
+            ],
+            "distance_traveled": 5.619935858288307
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.14534592628479004,
+            "drone_simtime": 6.291666666666667,
+            "total_error": [
+                73.21421909243124,
+                78.81122856151764,
+                10.391441018195234
+            ],
+            "distance_traveled": 6.529151414361061
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.12506508827209473,
+            "drone_simtime": 5.375,
+            "total_error": [
+                76.06797190708758,
+                78.06956544768387,
+                8.591420630384377
+            ],
+            "distance_traveled": 5.606252921247944
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.14598727226257324,
+            "drone_simtime": 6.229166666666667,
+            "total_error": [
+                78.65545184663854,
+                76.10852356461466,
+                8.466995499291354
+            ],
+            "distance_traveled": 5.614472148161734
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.1348559856414795,
+            "drone_simtime": 5.833333333333333,
+            "total_error": [
+                74.45253749292408,
+                78.00520050837329,
+                8.00967744482521
+            ],
+            "distance_traveled": 5.963752260528769
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.17154860496520996,
+            "drone_simtime": 7.4375,
+            "total_error": [
+                71.85729890857075,
+                75.86076795375473,
+                9.85235544024562
+            ],
+            "distance_traveled": 6.247158939133955
+        }
+    ],
+    [
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.12653589248657227,
+            "drone_simtime": 4.645833333333333,
+            "total_error": [
+                79.32992980117383,
+                80.62122873128973,
+                9.176734754682109
+            ],
+            "distance_traveled": 5.655580252214177
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.11349892616271973,
+            "drone_simtime": 4.25,
+            "total_error": [
+                82.36242261324199,
+                82.67823294927173,
+                7.9919502281412855
+            ],
+            "distance_traveled": 5.6511861288623315
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.08466839790344238,
+            "drone_simtime": 3.1041666666666665,
+            "total_error": [
+                83.77221230007429,
+                82.3097800495133,
+                11.212901363125825
+            ],
+            "distance_traveled": 5.87075797758816
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.11253666877746582,
+            "drone_simtime": 4.104166666666667,
+            "total_error": [
+                81.04208941139382,
+                80.10181189931355,
+                8.847357922286271
+            ],
+            "distance_traveled": 5.52726596891103
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.23575782775878906,
+            "drone_simtime": 10.1875,
+            "total_error": [
+                58.9888556167357,
+                39.512520480894686,
+                8.675859081009829
+            ],
+            "distance_traveled": 8.421314238588579
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.0939950942993164,
+            "drone_simtime": 4.020833333333333,
+            "total_error": [
+                81.97271758579379,
+                80.97718965790858,
+                10.364830401956526
+            ],
+            "distance_traveled": 5.889884635921939
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.11863064765930176,
+            "drone_simtime": 4.75,
+            "total_error": [
+                78.02786905452767,
+                80.9699376356297,
+                9.383713369750035
+            ],
+            "distance_traveled": 6.084058530002856
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.12621259689331055,
+            "drone_simtime": 5.145833333333333,
+            "total_error": [
+                79.61883347365493,
+                78.15485600936933,
+                9.38589821870239
+            ],
+            "distance_traveled": 5.6643005807846105
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.12504959106445312,
+            "drone_simtime": 5.354166666666667,
+            "total_error": [
+                74.61595520440514,
+                80.94549350203168,
+                10.300161381406285
+            ],
+            "distance_traveled": 6.385481558359128
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.0972452163696289,
+            "drone_simtime": 4.166666666666667,
+            "total_error": [
+                81.07875666500763,
+                79.815664657483,
+                9.42209558799937
+            ],
+            "distance_traveled": 5.642114284859892
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.12041902542114258,
+            "drone_simtime": 5.166666666666667,
+            "total_error": [
+                76.14787132478278,
+                81.40411194731585,
+                10.623612213475266
+            ],
+            "distance_traveled": 6.536466866712043
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.10295724868774414,
+            "drone_simtime": 4.416666666666667,
+            "total_error": [
+                79.09401591809049,
+                80.19332306376853,
+                8.643569176181481
+            ],
+            "distance_traveled": 5.605943084638043
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.1175529956817627,
+            "drone_simtime": 5.083333333333333,
+            "total_error": [
+                81.42630507474918,
+                78.3834041673823,
+                8.688855496357629
+            ],
+            "distance_traveled": 5.597308131371091
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.11171507835388184,
+            "drone_simtime": 4.770833333333333,
+            "total_error": [
+                78.07980192666163,
+                80.54284443144851,
+                8.14472860123971
+            ],
+            "distance_traveled": 5.933072056576041
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.14049267768859863,
+            "drone_simtime": 6.041666666666667,
+            "total_error": [
+                76.0929258783817,
+                77.66952550853655,
+                10.231858430206437
+            ],
+            "distance_traveled": 6.227024810249857
+        }
+    ],
+    [
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.10167407989501953,
+            "drone_simtime": 3.625,
+            "total_error": [
+                82.50892355907808,
+                82.14068369022516,
+                9.421219890072585
+            ],
+            "distance_traveled": 5.6529889749357825
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.09338259696960449,
+            "drone_simtime": 3.3541666666666665,
+            "total_error": [
+                84.5579877675481,
+                84.18243754317075,
+                8.048442466917734
+            ],
+            "distance_traveled": 5.621106610651953
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.06859564781188965,
+            "drone_simtime": 2.4166666666666665,
+            "total_error": [
+                84.02384225138252,
+                83.2191551974792,
+                10.8579796847132
+            ],
+            "distance_traveled": 5.828299559617806
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.09105038642883301,
+            "drone_simtime": 3.25,
+            "total_error": [
+                83.6145740807767,
+                83.7149445745861,
+                8.891588675661902
+            ],
+            "distance_traveled": 5.515463619662088
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.22220087051391602,
+            "drone_simtime": 9.3125,
+            "total_error": [
+                56.34016063632029,
+                40.08509971458283,
+                9.035644755937977
+            ],
+            "distance_traveled": 8.420053997300442
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.07606911659240723,
+            "drone_simtime": 3.1666666666666665,
+            "total_error": [
+                83.79008462727349,
+                83.17947647090365,
+                10.541256191250929
+            ],
+            "distance_traveled": 5.8811698516555175
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.0900735855102539,
+            "drone_simtime": 3.7291666666666665,
+            "total_error": [
+                81.13195667156396,
+                83.31380694841815,
+                9.596500613928528
+            ],
+            "distance_traveled": 6.055895112844184
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.096099853515625,
+            "drone_simtime": 4.020833333333333,
+            "total_error": [
+                81.29756557629193,
+                81.49316640695191,
+                9.62561277609655
+            ],
+            "distance_traveled": 5.646838638289394
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.10001015663146973,
+            "drone_simtime": 4.166666666666667,
+            "total_error": [
+                79.79750227147164,
+                82.75186761004974,
+                10.618552273213242
+            ],
+            "distance_traveled": 6.3737625181353765
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.0792388916015625,
+            "drone_simtime": 3.2708333333333335,
+            "total_error": [
+                83.26827125518132,
+                82.91460450853637,
+                9.587905279523024
+            ],
+            "distance_traveled": 5.619269849020532
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.09724736213684082,
+            "drone_simtime": 4.020833333333333,
+            "total_error": [
+                80.70220404795887,
+                83.0484393256716,
+                10.928746310841822
+            ],
+            "distance_traveled": 6.489262951833276
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.09265303611755371,
+            "drone_simtime": 3.4791666666666665,
+            "total_error": [
+                82.12538971129378,
+                83.48967454357548,
+                8.597080426917065
+            ],
+            "distance_traveled": 5.598228291575139
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.0936288833618164,
+            "drone_simtime": 3.9791666666666665,
+            "total_error": [
+                83.60263538690349,
+                82.8027896598396,
+                8.839471724823682
+            ],
+            "distance_traveled": 5.615696468948776
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.08832502365112305,
+            "drone_simtime": 3.75,
+            "total_error": [
+                81.92554250163552,
+                83.06039192754945,
+                8.376146089922814
+            ],
+            "distance_traveled": 5.930060036216226
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.10921573638916016,
+            "drone_simtime": 4.6875,
+            "total_error": [
+                79.91178117682401,
+                82.04731641935172,
+                10.505943024331835
+            ],
+            "distance_traveled": 6.206173633421558
+        }
+    ],
+    [
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.07385945320129395,
+            "drone_simtime": 2.6458333333333335,
+            "total_error": [
+                84.87397581208062,
+                84.42089035155334,
+                9.48576633191654
+            ],
+            "distance_traveled": 5.654878533138433
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.07157087326049805,
+            "drone_simtime": 2.5208333333333335,
+            "total_error": [
+                86.22700722546878,
+                85.1813533126279,
+                8.483511147566253
+            ],
+            "distance_traveled": 5.615411351635278
+        },
+        {
+            "goal_found": true,
+            "goal_reached": false,
+            "drone_realtime": 0.0,
+            "drone_simtime": 0.0,
+            "total_error": [
+                -2125.129681524686,
+                -1578.4644363128841,
+                2003.4143968953908
+            ],
+            "distance_traveled": 19.526937657596356
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.06856918334960938,
+            "drone_simtime": 2.3958333333333335,
+            "total_error": [
+                85.30698024167945,
+                84.84372808686521,
+                8.890648013504704
+            ],
+            "distance_traveled": 5.517954481475319
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.18137001991271973,
+            "drone_simtime": 8.020833333333334,
+            "total_error": [
+                53.88222640257212,
+                43.95771534995744,
+                9.351353505969664
+            ],
+            "distance_traveled": 8.36216870630656
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.0548403263092041,
+            "drone_simtime": 2.3333333333333335,
+            "total_error": [
+                85.10293352205764,
+                85.54652813045114,
+                10.503908332286912
+            ],
+            "distance_traveled": 5.901417456627827
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.06237006187438965,
+            "drone_simtime": 2.6875,
+            "total_error": [
+                83.73001957804675,
+                85.4506975955845,
+                9.815914307816236
+            ],
+            "distance_traveled": 6.015286304133217
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.06628704071044922,
+            "drone_simtime": 2.875,
+            "total_error": [
+                84.26016655893592,
+                83.98839205182185,
+                9.774553790822955
+            ],
+            "distance_traveled": 5.659458277206824
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.06936120986938477,
+            "drone_simtime": 3.0,
+            "total_error": [
+                84.1586932645835,
+                84.42567251376404,
+                10.825571976719328
+            ],
+            "distance_traveled": 6.3293012759714244
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.05675148963928223,
+            "drone_simtime": 2.4166666666666665,
+            "total_error": [
+                85.09789166533555,
+                85.39437628511577,
+                9.54962859418292
+            ],
+            "distance_traveled": 5.650340842111162
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.06762361526489258,
+            "drone_simtime": 2.9166666666666665,
+            "total_error": [
+                84.88692277769785,
+                85.48940590164706,
+                11.009669464927182
+            ],
+            "distance_traveled": 6.454215756842885
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.058937788009643555,
+            "drone_simtime": 2.5416666666666665,
+            "total_error": [
+                84.94149176543449,
+                84.44058755140559,
+                8.543324170239849
+            ],
+            "distance_traveled": 5.580595853523529
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.06729626655578613,
+            "drone_simtime": 2.875,
+            "total_error": [
+                85.35897891656153,
+                84.5278963393053,
+                8.924830671458231
+            ],
+            "distance_traveled": 5.617049904566989
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.06263399124145508,
+            "drone_simtime": 2.6875,
+            "total_error": [
+                85.56037522444016,
+                84.41866556102217,
+                8.484682060880141
+            ],
+            "distance_traveled": 5.8543067723873765
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.07650303840637207,
+            "drone_simtime": 3.3333333333333335,
+            "total_error": [
+                84.08361754897814,
+                82.91789114886411,
+                10.810307747414656
+            ],
+            "distance_traveled": 6.137251670132181
+        }
+    ],
+    [
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.05894660949707031,
+            "drone_simtime": 2.1041666666666665,
+            "total_error": [
+                84.59614881829891,
+                84.09441101988756,
+                9.73320418577384
+            ],
+            "distance_traveled": 5.688204373697294
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.06639909744262695,
+            "drone_simtime": 2.3958333333333335,
+            "total_error": [
+                91.23820055939386,
+                87.12982879557521,
+                10.393159053179772
+            ],
+            "distance_traveled": 5.70456321699377
+        },
+        {
+            "goal_found": true,
+            "goal_reached": false,
+            "drone_realtime": 0.0,
+            "drone_simtime": 0.0,
+            "total_error": [
+                -1065.3947431815352,
+                1833.2141169286215,
+                2054.666843632826
+            ],
+            "distance_traveled": 10.417323164834755
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.053510189056396484,
+            "drone_simtime": 1.9375,
+            "total_error": [
+                85.50157863082802,
+                84.59037753329179,
+                8.789607304979157
+            ],
+            "distance_traveled": 5.544076765306277
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.07348346710205078,
+            "drone_simtime": 3.1041666666666665,
+            "total_error": [
+                85.39116759566114,
+                83.3577062350552,
+                9.728847465995866
+            ],
+            "distance_traveled": 7.85678570751957
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.04468941688537598,
+            "drone_simtime": 1.8541666666666667,
+            "total_error": [
+                84.0689599879848,
+                85.29821360289884,
+                10.970235468812497
+            ],
+            "distance_traveled": 5.895468614524266
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.05322837829589844,
+            "drone_simtime": 2.1875,
+            "total_error": [
+                85.35590249751644,
+                86.041467702364,
+                9.922017097399722
+            ],
+            "distance_traveled": 6.052913634662251
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.05526399612426758,
+            "drone_simtime": 2.3125,
+            "total_error": [
+                84.22282641349281,
+                84.79011696392017,
+                9.787986820840011
+            ],
+            "distance_traveled": 5.693833519043991
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.07866716384887695,
+            "drone_simtime": 2.3958333333333335,
+            "total_error": [
+                85.4843480360882,
+                84.30706322080526,
+                11.005605709414631
+            ],
+            "distance_traveled": 6.354151076023757
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.04706764221191406,
+            "drone_simtime": 1.9375,
+            "total_error": [
+                84.73272923802192,
+                84.99243790486314,
+                9.670036749371372
+            ],
+            "distance_traveled": 5.6483584438913015
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.054511308670043945,
+            "drone_simtime": 2.2708333333333335,
+            "total_error": [
+                86.2357323214655,
+                83.92823563910243,
+                11.962065775027636
+            ],
+            "distance_traveled": 6.451923030046774
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.050261735916137695,
+            "drone_simtime": 2.0833333333333335,
+            "total_error": [
+                85.77337583352386,
+                85.2729414782888,
+                8.407833200620486
+            ],
+            "distance_traveled": 5.602644686300617
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.055941104888916016,
+            "drone_simtime": 2.3333333333333335,
+            "total_error": [
+                85.93236147779551,
+                84.88944130411677,
+                8.840306980378204
+            ],
+            "distance_traveled": 5.624818677372897
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.052944183349609375,
+            "drone_simtime": 2.2083333333333335,
+            "total_error": [
+                86.15037192323335,
+                85.50115320221894,
+                8.748315094692925
+            ],
+            "distance_traveled": 5.833923528737403
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.06344771385192871,
+            "drone_simtime": 2.6041666666666665,
+            "total_error": [
+                85.5021828430969,
+                82.31946649828994,
+                11.572463311929088
+            ],
+            "distance_traveled": 6.107267771901995
+        }
+    ],
+    [
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.049224853515625,
+            "drone_simtime": 1.8125,
+            "total_error": [
+                84.75330879306988,
+                84.00280976210527,
+                9.859269493273922
+            ],
+            "distance_traveled": 5.732006533745005
+        },
+        {
+            "goal_found": true,
+            "goal_reached": false,
+            "drone_realtime": 0.0,
+            "drone_simtime": 0.0,
+            "total_error": [
+                -488.33290431715534,
+                -1528.205343167248,
+                1981.8903426663246
+            ],
+            "distance_traveled": 7.3494522517654755
+        },
+        {
+            "goal_found": true,
+            "goal_reached": false,
+            "drone_realtime": 0.0,
+            "drone_simtime": 0.0,
+            "total_error": [
+                -7436.153231931414,
+                148.59612586407783,
+                2090.214787908781
+            ],
+            "distance_traveled": 10.532282179479612
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.045446157455444336,
+            "drone_simtime": 1.6666666666666667,
+            "total_error": [
+                84.45321689369048,
+                84.90245685052373,
+                8.887785351886212
+            ],
+            "distance_traveled": 5.530812594684048
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.061093807220458984,
+            "drone_simtime": 2.625,
+            "total_error": [
+                85.60817818856914,
+                86.89055232230928,
+                9.777971350262693
+            ],
+            "distance_traveled": 7.704292767980133
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.12081432342529297,
+            "drone_simtime": 5.270833333333333,
+            "total_error": [
+                54.33622217924369,
+                45.39690290933982,
+                14.362862913012295
+            ],
+            "distance_traveled": 8.074042563968874
+        },
+        {
+            "goal_found": true,
+            "goal_reached": false,
+            "drone_realtime": 0.0,
+            "drone_simtime": 0.0,
+            "total_error": [
+                -6100.969284791975,
+                -4917.237044298269,
+                1978.0422256846723
+            ],
+            "distance_traveled": 14.253618529298596
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.04556393623352051,
+            "drone_simtime": 1.9375,
+            "total_error": [
+                83.13494498195865,
+                84.8417647956989,
+                10.30464775987079
+            ],
+            "distance_traveled": 5.6775112503528185
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.04610753059387207,
+            "drone_simtime": 1.9583333333333333,
+            "total_error": [
+                85.48989576286831,
+                82.65467312237293,
+                12.458068618832636
+            ],
+            "distance_traveled": 6.301886104675288
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.03984522819519043,
+            "drone_simtime": 1.6666666666666667,
+            "total_error": [
+                83.6526235546714,
+                84.9033094224382,
+                9.863249211699392
+            ],
+            "distance_traveled": 5.646582428281869
+        },
+        {
+            "goal_found": true,
+            "goal_reached": false,
+            "drone_realtime": 0.0,
+            "drone_simtime": 0.0,
+            "total_error": [
+                2491.2191497682998,
+                -3023.5325025771153,
+                1945.999296221315
+            ],
+            "distance_traveled": 28.26326883783647
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.042604684829711914,
+            "drone_simtime": 1.7916666666666667,
+            "total_error": [
+                85.63431971708006,
+                84.55646476557047,
+                8.428443338253917
+            ],
+            "distance_traveled": 5.604087447169744
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.04690098762512207,
+            "drone_simtime": 1.9791666666666667,
+            "total_error": [
+                84.37667194019208,
+                84.94459690782442,
+                8.925060374405401
+            ],
+            "distance_traveled": 5.6344496643140305
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.04524660110473633,
+            "drone_simtime": 1.9375,
+            "total_error": [
+                86.5687111154527,
+                87.93055060595451,
+                9.083455156982282
+            ],
+            "distance_traveled": 5.863121446300269
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.05170583724975586,
+            "drone_simtime": 2.2083333333333335,
+            "total_error": [
+                86.68321049086899,
+                82.01774149324743,
+                11.763312792089891
+            ],
+            "distance_traveled": 6.177551834030606
+        }
+    ],
+    [
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.0565030574798584,
+            "drone_simtime": 2.0208333333333335,
+            "total_error": [
+                87.71549223352824,
+                82.57164942475879,
+                9.825989376467366
+            ],
+            "distance_traveled": 6.349577155150295
+        },
+        {
+            "goal_found": true,
+            "goal_reached": false,
+            "drone_realtime": 0.0,
+            "drone_simtime": 0.0,
+            "total_error": [
+                1023.900349064809,
+                -4897.077081856906,
+                2056.8404880226135
+            ],
+            "distance_traveled": 21.133516867459637
+        },
+        {
+            "goal_found": true,
+            "goal_reached": false,
+            "drone_realtime": 0.0,
+            "drone_simtime": 0.0,
+            "total_error": [
+                -3837.8388422250464,
+                3154.5914624837346,
+                2095.2491079766605
+            ],
+            "distance_traveled": 13.00727117933185
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.042088985443115234,
+            "drone_simtime": 1.5,
+            "total_error": [
+                84.74967806200752,
+                86.83160222785713,
+                8.284032751854637
+            ],
+            "distance_traveled": 5.59671036997731
+        },
+        {
+            "goal_found": true,
+            "goal_reached": false,
+            "drone_realtime": 0.0,
+            "drone_simtime": 0.0,
+            "total_error": [
+                -63.809314943862894,
+                110.90882227727502,
+                2002.5464859136089
+            ],
+            "distance_traveled": 10.33569890462719
+        },
+        {
+            "goal_found": true,
+            "goal_reached": false,
+            "drone_realtime": 0.0,
+            "drone_simtime": 0.0,
+            "total_error": [
+                -2167.1161738029027,
+                3206.9647275473494,
+                2058.6715810908813
+            ],
+            "distance_traveled": 11.761947215407892
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.0457766056060791,
+            "drone_simtime": 1.7916666666666667,
+            "total_error": [
+                92.9398946070323,
+                87.77037389601746,
+                9.622956314789777
+            ],
+            "distance_traveled": 6.259426333273821
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.039124488830566406,
+            "drone_simtime": 1.6041666666666667,
+            "total_error": [
+                81.59174590095432,
+                86.69008187802507,
+                10.87469774832579
+            ],
+            "distance_traveled": 5.701873001331788
+        },
+        {
+            "goal_found": true,
+            "goal_reached": false,
+            "drone_realtime": 0.0,
+            "drone_simtime": 0.0,
+            "total_error": [
+                -524.4883130394267,
+                -2299.5773828269407,
+                2012.7424859805567
+            ],
+            "distance_traveled": 16.15315693665834
+        },
+        {
+            "goal_found": true,
+            "goal_reached": false,
+            "drone_realtime": 0.0,
+            "drone_simtime": 0.0,
+            "total_error": [
+                -1969.71261228275,
+                -3467.1429503257127,
+                1964.657718247261
+            ],
+            "distance_traveled": 18.718053688429
+        },
+        {
+            "goal_found": true,
+            "goal_reached": false,
+            "drone_realtime": 0.0,
+            "drone_simtime": 0.0,
+            "total_error": [
+                -1294.8930881582367,
+                -1803.991266809174,
+                2039.978387568855
+            ],
+            "distance_traveled": 18.8211864673496
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.03800463676452637,
+            "drone_simtime": 1.5625,
+            "total_error": [
+                85.63140345502637,
+                86.44271319388592,
+                8.189435844051816
+            ],
+            "distance_traveled": 5.616843150420979
+        },
+        {
+            "goal_found": true,
+            "goal_reached": false,
+            "drone_realtime": 0.0,
+            "drone_simtime": 0.0,
+            "total_error": [
+                447.87240922222134,
+                2034.1482527004703,
+                1934.8857907306972
+            ],
+            "distance_traveled": 12.781659113437389
+        },
+        {
+            "goal_found": true,
+            "goal_reached": false,
+            "drone_realtime": 0.0,
+            "drone_simtime": 0.0,
+            "total_error": [
+                -1894.405720096499,
+                332.5506611335156,
+                2065.31707985534
+            ],
+            "distance_traveled": 7.231005459060911
+        },
+        {
+            "goal_found": true,
+            "goal_reached": false,
+            "drone_realtime": 0.0,
+            "drone_simtime": 0.0,
+            "total_error": [
+                -700.6640403885808,
+                -1826.858539751963,
+                2023.627434011102
+            ],
+            "distance_traveled": 16.267851223370958
+        }
+    ],
+    [
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.05505251884460449,
+            "drone_simtime": 2.0208333333333335,
+            "total_error": [
+                87.71549223352824,
+                82.57164942475879,
+                9.825989376467366
+            ],
+            "distance_traveled": 6.349577155150295
+        },
+        {
+            "goal_found": true,
+            "goal_reached": false,
+            "drone_realtime": 0.0,
+            "drone_simtime": 0.0,
+            "total_error": [
+                1023.900349064809,
+                -4897.077081856906,
+                2056.8404880226135
+            ],
+            "distance_traveled": 21.133516867459637
+        },
+        {
+            "goal_found": true,
+            "goal_reached": false,
+            "drone_realtime": 0.0,
+            "drone_simtime": 0.0,
+            "total_error": [
+                -3837.8388422250464,
+                3154.5914624837346,
+                2095.2491079766605
+            ],
+            "distance_traveled": 13.00727117933185
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.04104423522949219,
+            "drone_simtime": 1.5,
+            "total_error": [
+                84.74967806200752,
+                86.83160222785713,
+                8.284032751854637
+            ],
+            "distance_traveled": 5.59671036997731
+        },
+        {
+            "goal_found": true,
+            "goal_reached": false,
+            "drone_realtime": 0.0,
+            "drone_simtime": 0.0,
+            "total_error": [
+                -63.809314943862894,
+                110.90882227727502,
+                2002.5464859136089
+            ],
+            "distance_traveled": 10.33569890462719
+        },
+        {
+            "goal_found": true,
+            "goal_reached": false,
+            "drone_realtime": 0.0,
+            "drone_simtime": 0.0,
+            "total_error": [
+                -2167.1161738029027,
+                3206.9647275473494,
+                2058.6715810908813
+            ],
+            "distance_traveled": 11.761947215407892
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.04304671287536621,
+            "drone_simtime": 1.7916666666666667,
+            "total_error": [
+                92.9398946070323,
+                87.77037389601746,
+                9.622956314789777
+            ],
+            "distance_traveled": 6.259426333273821
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.03826618194580078,
+            "drone_simtime": 1.6041666666666667,
+            "total_error": [
+                81.59174590095432,
+                86.69008187802507,
+                10.87469774832579
+            ],
+            "distance_traveled": 5.701873001331788
+        },
+        {
+            "goal_found": true,
+            "goal_reached": false,
+            "drone_realtime": 0.0,
+            "drone_simtime": 0.0,
+            "total_error": [
+                -524.4883130394267,
+                -2299.5773828269407,
+                2012.7424859805567
+            ],
+            "distance_traveled": 16.15315693665834
+        },
+        {
+            "goal_found": true,
+            "goal_reached": false,
+            "drone_realtime": 0.0,
+            "drone_simtime": 0.0,
+            "total_error": [
+                -1969.71261228275,
+                -3467.1429503257127,
+                1964.657718247261
+            ],
+            "distance_traveled": 18.718053688429
+        },
+        {
+            "goal_found": true,
+            "goal_reached": false,
+            "drone_realtime": 0.0,
+            "drone_simtime": 0.0,
+            "total_error": [
+                -1294.8930881582367,
+                -1803.991266809174,
+                2039.978387568855
+            ],
+            "distance_traveled": 18.8211864673496
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.03795886039733887,
+            "drone_simtime": 1.5625,
+            "total_error": [
+                85.63140345502637,
+                86.44271319388592,
+                8.189435844051816
+            ],
+            "distance_traveled": 5.616843150420979
+        },
+        {
+            "goal_found": true,
+            "goal_reached": false,
+            "drone_realtime": 0.0,
+            "drone_simtime": 0.0,
+            "total_error": [
+                447.87240922222134,
+                2034.1482527004703,
+                1934.8857907306972
+            ],
+            "distance_traveled": 12.781659113437389
+        },
+        {
+            "goal_found": true,
+            "goal_reached": false,
+            "drone_realtime": 0.0,
+            "drone_simtime": 0.0,
+            "total_error": [
+                -1894.405720096499,
+                332.5506611335156,
+                2065.31707985534
+            ],
+            "distance_traveled": 7.231005459060911
+        },
+        {
+            "goal_found": true,
+            "goal_reached": false,
+            "drone_realtime": 0.0,
+            "drone_simtime": 0.0,
+            "total_error": [
+                -700.6640403885808,
+                -1826.858539751963,
+                2023.627434011102
+            ],
+            "distance_traveled": 16.267851223370958
+        }
+    ],
+    [
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.0488743782043457,
+            "drone_simtime": 1.7708333333333333,
+            "total_error": [
+                85.32380370903144,
+                84.75108863432504,
+                9.506405471779113
+            ],
+            "distance_traveled": 5.6964727458763145
+        },
+        {
+            "goal_found": true,
+            "goal_reached": false,
+            "drone_realtime": 0.0,
+            "drone_simtime": 0.0,
+            "total_error": [
+                -3162.312306207908,
+                -1513.5961369495865,
+                2001.8126407097266
+            ],
+            "distance_traveled": 12.706486733441688
+        },
+        {
+            "goal_found": true,
+            "goal_reached": false,
+            "drone_realtime": 0.0,
+            "drone_simtime": 0.0,
+            "total_error": [
+                -5375.348972322423,
+                -77.25285134176758,
+                2085.740136500059
+            ],
+            "distance_traveled": 20.808406644176536
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.045546531677246094,
+            "drone_simtime": 1.6666666666666667,
+            "total_error": [
+                85.02960160747149,
+                85.161164456603,
+                8.688357216558062
+            ],
+            "distance_traveled": 5.520048254158562
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.05986356735229492,
+            "drone_simtime": 2.5416666666666665,
+            "total_error": [
+                86.09747216248833,
+                87.37490932379639,
+                9.802222602317562
+            ],
+            "distance_traveled": 7.672135262633926
+        },
+        {
+            "goal_found": true,
+            "goal_reached": false,
+            "drone_realtime": 0.0,
+            "drone_simtime": 0.0,
+            "total_error": [
+                -55.22474461681335,
+                -1865.2205809992556,
+                2023.7706260274467
+            ],
+            "distance_traveled": 8.233108273582287
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.04206418991088867,
+            "drone_simtime": 1.7708333333333333,
+            "total_error": [
+                86.94281175918866,
+                84.4272958883175,
+                12.31325133926442
+            ],
+            "distance_traveled": 6.239077034328222
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.04551434516906738,
+            "drone_simtime": 1.9166666666666667,
+            "total_error": [
+                83.64866967762062,
+                84.99389923541868,
+                9.893154963297667
+            ],
+            "distance_traveled": 5.727152475290073
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.04539132118225098,
+            "drone_simtime": 1.9166666666666667,
+            "total_error": [
+                85.64115332876501,
+                82.81100809062602,
+                12.349983033232899
+            ],
+            "distance_traveled": 6.351302651273667
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.038878679275512695,
+            "drone_simtime": 1.625,
+            "total_error": [
+                84.65162513691212,
+                85.10731500173279,
+                9.509538902888687
+            ],
+            "distance_traveled": 5.662933951742563
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.05730414390563965,
+            "drone_simtime": 2.4375,
+            "total_error": [
+                88.00792906401881,
+                74.44739461280327,
+                11.931001542196821
+            ],
+            "distance_traveled": 7.652493467022385
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.04211592674255371,
+            "drone_simtime": 1.7708333333333333,
+            "total_error": [
+                85.25995360636102,
+                86.66488996981798,
+                8.245771563566658
+            ],
+            "distance_traveled": 5.584682487179263
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.04576468467712402,
+            "drone_simtime": 1.9166666666666667,
+            "total_error": [
+                84.51568438798529,
+                84.5046910086771,
+                8.957674660533925
+            ],
+            "distance_traveled": 5.666786277989456
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.04537701606750488,
+            "drone_simtime": 1.9166666666666667,
+            "total_error": [
+                86.3163753929823,
+                89.78892011957245,
+                9.507484177484907
+            ],
+            "distance_traveled": 5.9060166872623805
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.050620079040527344,
+            "drone_simtime": 2.1458333333333335,
+            "total_error": [
+                86.15196918309545,
+                82.02882037248516,
+                11.781549907688603
+            ],
+            "distance_traveled": 6.170916223969728
+        }
+    ],
+    [
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.055556297302246094,
+            "drone_simtime": 1.9791666666666667,
+            "total_error": [
+                85.21421962682024,
+                84.81089490010642,
+                9.429780493182495
+            ],
+            "distance_traveled": 5.6830556886863235
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.058121681213378906,
+            "drone_simtime": 2.0625,
+            "total_error": [
+                96.45725008159403,
+                83.91146765538751,
+                11.099753818508802
+            ],
+            "distance_traveled": 5.858902633667821
+        },
+        {
+            "goal_found": true,
+            "goal_reached": false,
+            "drone_realtime": 0.0,
+            "drone_simtime": 0.0,
+            "total_error": [
+                -3889.300132070527,
+                -702.2577339597673,
+                2040.6615160681763
+            ],
+            "distance_traveled": 9.638261573186465
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.052294015884399414,
+            "drone_simtime": 1.8541666666666667,
+            "total_error": [
+                85.93400015512974,
+                85.94263668615984,
+                8.654599749179408
+            ],
+            "distance_traveled": 5.5143403592874565
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.06897854804992676,
+            "drone_simtime": 2.8541666666666665,
+            "total_error": [
+                85.02172692574905,
+                85.0370824530984,
+                9.842457515832145
+            ],
+            "distance_traveled": 7.786767720993188
+        },
+        {
+            "goal_found": true,
+            "goal_reached": false,
+            "drone_realtime": 0.0,
+            "drone_simtime": 0.0,
+            "total_error": [
+                -1463.354346761865,
+                1593.0712012337533,
+                1942.1659051477943
+            ],
+            "distance_traveled": 22.972787405787454
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.05010342597961426,
+            "drone_simtime": 2.0208333333333335,
+            "total_error": [
+                85.82247302946982,
+                85.99478313908934,
+                10.137847973612272
+            ],
+            "distance_traveled": 6.094352456265721
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.052997589111328125,
+            "drone_simtime": 2.1666666666666665,
+            "total_error": [
+                84.5258752783771,
+                85.45206399451237,
+                9.613728093004598
+            ],
+            "distance_traveled": 5.69306660358585
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.053560733795166016,
+            "drone_simtime": 2.1875,
+            "total_error": [
+                85.5937035950735,
+                83.78933786106161,
+                11.390956481482164
+            ],
+            "distance_traveled": 6.344823610212397
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.04268002510070801,
+            "drone_simtime": 1.8125,
+            "total_error": [
+                85.09283113894513,
+                85.5441115029119,
+                9.440504307920754
+            ],
+            "distance_traveled": 5.637793897742213
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.048983097076416016,
+            "drone_simtime": 2.0833333333333335,
+            "total_error": [
+                86.29073162320668,
+                83.39020035428635,
+                12.642333107562193
+            ],
+            "distance_traveled": 6.419808944877681
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.04546952247619629,
+            "drone_simtime": 1.9583333333333333,
+            "total_error": [
+                86.12324081945609,
+                86.0446984815135,
+                8.328578429710825
+            ],
+            "distance_traveled": 5.594872778856533
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.049913883209228516,
+            "drone_simtime": 2.1458333333333335,
+            "total_error": [
+                84.66655408707356,
+                85.17692310505396,
+                8.937708016323374
+            ],
+            "distance_traveled": 5.587487552947951
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.049123287200927734,
+            "drone_simtime": 2.1041666666666665,
+            "total_error": [
+                86.78435422884242,
+                87.45186181757366,
+                8.825175564309177
+            ],
+            "distance_traveled": 5.868946362704381
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.05526137351989746,
+            "drone_simtime": 2.3958333333333335,
+            "total_error": [
+                85.4319159147587,
+                82.49023321185982,
+                11.557999571666848
+            ],
+            "distance_traveled": 6.138927102964838
+        }
+    ],
+    [
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.05609536170959473,
+            "drone_simtime": 2.0625,
+            "total_error": [
+                86.29318574259352,
+                79.64669778763685,
+                10.105286350349115
+            ],
+            "distance_traveled": 6.457791406635103
+        },
+        {
+            "goal_found": true,
+            "goal_reached": false,
+            "drone_realtime": 0.0,
+            "drone_simtime": 0.0,
+            "total_error": [
+                -302.8756194702295,
+                -3098.7853795676724,
+                2052.0166792585255
+            ],
+            "distance_traveled": 18.562744004693965
+        },
+        {
+            "goal_found": true,
+            "goal_reached": false,
+            "drone_realtime": 0.0,
+            "drone_simtime": 0.0,
+            "total_error": [
+                -7267.902845349068,
+                920.1960063832671,
+                2086.961440579901
+            ],
+            "distance_traveled": 22.462623378165727
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.04370570182800293,
+            "drone_simtime": 1.5833333333333333,
+            "total_error": [
+                86.10980020707278,
+                85.70388433602469,
+                8.341029855722008
+            ],
+            "distance_traveled": 5.591558182554261
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.055666446685791016,
+            "drone_simtime": 2.3333333333333335,
+            "total_error": [
+                86.46696867792384,
+                86.40203182006685,
+                9.870610396108788
+            ],
+            "distance_traveled": 7.654081658632631
+        },
+        {
+            "goal_found": true,
+            "goal_reached": false,
+            "drone_realtime": 0.0,
+            "drone_simtime": 0.0,
+            "total_error": [
+                -331.38430120927217,
+                -3084.652004712012,
+                2058.2551500757863
+            ],
+            "distance_traveled": 10.221884706667934
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.03932833671569824,
+            "drone_simtime": 1.6458333333333333,
+            "total_error": [
+                85.76417850829566,
+                85.82125965221472,
+                10.881609101765932
+            ],
+            "distance_traveled": 6.090571847048211
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.04156351089477539,
+            "drone_simtime": 1.7291666666666667,
+            "total_error": [
+                81.66243725368025,
+                86.45691558276314,
+                10.648682101637336
+            ],
+            "distance_traveled": 5.738036971630304
+        },
+        {
+            "goal_found": true,
+            "goal_reached": false,
+            "drone_realtime": 0.0,
+            "drone_simtime": 0.0,
+            "total_error": [
+                1273.6743243791507,
+                -1666.9308377340801,
+                1998.217192152034
+            ],
+            "distance_traveled": 12.281674495121345
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.03609824180603027,
+            "drone_simtime": 1.5,
+            "total_error": [
+                82.17022944943065,
+                86.72296375624795,
+                9.604095327118095
+            ],
+            "distance_traveled": 5.735968938444663
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.1353299617767334,
+            "drone_simtime": 5.854166666666667,
+            "total_error": [
+                52.32640994875045,
+                52.51859336026612,
+                13.9436176265717
+            ],
+            "distance_traveled": 9.1100897192192
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.039132118225097656,
+            "drone_simtime": 1.625,
+            "total_error": [
+                85.63357400925663,
+                84.5372831668456,
+                8.407157749947924
+            ],
+            "distance_traveled": 5.63108649068573
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.04211878776550293,
+            "drone_simtime": 1.75,
+            "total_error": [
+                83.6590759100068,
+                85.45075081959081,
+                8.95467205924262
+            ],
+            "distance_traveled": 5.615114583388744
+        },
+        {
+            "goal_found": true,
+            "goal_reached": true,
+            "drone_realtime": 0.046755313873291016,
+            "drone_simtime": 1.9583333333333333,
+            "total_error": [
+                91.0033906735585,
+                90.14312787742058,
+                13.521344231713195
+            ],
+            "distance_traveled": 6.380525517767936
+        },
+        {
+            "goal_found": true,
+            "goal_reached": false,
+            "drone_realtime": 0.0,
+            "drone_simtime": 0.0,
+            "total_error": [
+                -1476.446523589075,
+                -4423.57530523532,
+                1977.974496968017
+            ],
+            "distance_traveled": 28.11646082896784
+        }
     ]
 ]
